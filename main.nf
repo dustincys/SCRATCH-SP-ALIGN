@@ -1,7 +1,8 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl = 2
 
-include { NFQUARTO_EXAMPLE } from './subworkflow/local/example.nf'
+include { SCRATCH_ALIGN } from './subworkflow/local/scratch_align.nf'
+// include { SCRATCH_QC }    from './subworkflow/local/scratch_qc.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -9,8 +10,7 @@ include { NFQUARTO_EXAMPLE } from './subworkflow/local/example.nf'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-// def checkPathParamList = [params.paramA, params.paramB, params.paramC]
-// for (param in checkPathParamList) if (param) file(param, checkIfExists: true)
+if (params.samplesheet) { seurat_object = file(params.samplesheet) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -21,15 +21,17 @@ include { NFQUARTO_EXAMPLE } from './subworkflow/local/example.nf'
 workflow {
 
     // Description
-    ch_input       = Channel.fromPath(params.input, checkIfExists: true)
+    ch_samplesheet = Channel.fromPath(params.samplesheet, checkIfExists: true)
 
     // Description
     ch_template    = Channel.fromPath(params.template, checkIfExists: true)
     ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
         .collect()
 
-    NFQUARTO_EXAMPLE(
-        ch_input
+    // GEX+VDJ alignment
+    SCRATCH_ALIGN(
+        ch_samplesheet,
+        params.genome
     )
 
 }

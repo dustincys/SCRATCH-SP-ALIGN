@@ -1,0 +1,11 @@
+{
+    "input_seurat_object": "$.params.inputs[0].s3|/data/data/*_main_cluster_object.RDS",
+    "outdir": "$.params.dataset.s3|/data/",
+    "organism": "$.params.dataset.paramJson.pipeline_parameters.organism",
+    "input_cell_mask": "$.params.dataset.paramJson.pipeline_parameters.input_cell_mask",
+    "thr_n_features": "$.params.dataset.paramJson.sctype_parameters.thr_n_features",
+    "thr_npc": "$.params.dataset.paramJson.sctype_parameters.thr_npc",
+    "thr_resolution": "$.params.dataset.paramJson.sctype_parameters.thr_resolution",
+    "skip_sctype": "$.params.dataset.paramJson.sctype_parameters.skip_sctype",
+    "skip_celltypist": "$.params.dataset.paramJson.celltypist_parameters.skip_celltypist"
+}

@@ -1,0 +1,99 @@
+{
+    "ui": {},
+    "form": {
+        "title": "SCRATCH Annotation",
+        "type": "object",
+        "properties": {
+            "pipeline_parameters": {
+                "title": "Pipeline parameters",
+                "type": "object",
+                "properties": {
+                    "organism": {
+                        "type": "string",
+                        "title": "Organism",
+                        "default": "Human",
+                        "enum": [
+                            "Human",
+                            "Mouse"
+                        ]
+                    },
+                    "input_cell_mask_source": {
+                        "type": "string",
+                        "title": "Malignant mask",
+                        "description": "A tabular including the cell barcodes and status (e.g., Malignant/TME)",
+                        "enum": [
+                            "Not Applicable",
+                            "Custom"
+                            ],
+                        "default": "Not Applicable"
+                    }
+                },
+                "dependencies": {
+                    "input_cell_mask_source": {
+                    "oneOf": [
+                            {
+                                "properties": {
+                                    "input_cell_mask_source": {
+                                        "enum": [
+                                            "Custom"
+                                        ]
+                                    },
+                                    "input_cell_mask": {
+                                        "type": "string",
+                                        "pathType": "references",
+                                        "file": "**/data/data/**_main_cell_status.csv",
+                                        "title": "Malignant mask CSV file (optional)"
+                                    }
+                                }
+                            },
+                            {
+                            "properties": {
+                                "input_cell_mask_source": {
+                                "enum": [
+                                        "Not Applicable"
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "sctype_parameters": {
+                "title": "scType parameters",
+                "type": "object",
+                "properties": {
+                    "thr_n_features": {
+                        "type": "integer",
+                        "default": 2000,
+                        "title": "Number of features to select as top variable features"
+                    },
+                    "thr_npc": {
+                        "type": "integer",
+                        "default": 25,
+                        "title": "Number features for FindVariableFeatures"
+                    },
+                    "thr_resolution": {
+                        "type": "number",
+                        "default": 0.50,
+                        "title": "Resolution threshold"
+                    },
+                    "skip_sctype": {
+                        "type": "boolean",
+                        "title": "Skipping scType annotation"
+                    }
+                }
+            },
+            "celltypist_parameters": {
+            "title": "Celltypist parameters",
+            "type": "object",
+            "properties": {
+                    "skip_celltypist": {
+                        "type": "boolean",
+                        "title": "Skipping Celltypist annotation"
+                    }
+                }
+            }
+        }
+    }
+}
