@@ -1,5 +1,5 @@
 process CELLRANGER_VDJ {
-    
+
     tag "Running VDJ on ${sample}"
     label 'process_high'
 

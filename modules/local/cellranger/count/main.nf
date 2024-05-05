@@ -1,5 +1,5 @@
 process CELLRANGER_COUNT {
-    
+
     tag "Running GEX on ${sample}"
     label 'process_high'
 

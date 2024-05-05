@@ -61,6 +61,8 @@ workflow SCRATCH_ALIGN {
                 gex_indexes
             ) 
 
+        ch_cellrange_outs = ch_gex_alignment.outs
+
         }
 
         if(modality =~ /\b(TCR)/) {
@@ -75,17 +77,23 @@ workflow SCRATCH_ALIGN {
                 .map { row -> tuple row[0], row[1 .. 2].flatten() }
 
             // Cellranger gex alignment
-            ch_vdj_alignment = CELLRANGER_VDJ(
+            ch_tcr_alignment = CELLRANGER_VDJ(
                 ch_tcr_grouped,
                 vdj_indexes
             )
 
+        ch_cellrange_outs = ch_tcr_alignment.outs
 
         }
         
-        ch_gex_outs = ch_gex_alignment.outs
+
+        if(modality =~ /\b(GEX+TCR)/) {
+
+            ch_cellrange_outs = ch_gex_alignment.outs
+
+        }
 
     emit:
-        ch_gex_outs
+        ch_cellrange_outs
 
 }
