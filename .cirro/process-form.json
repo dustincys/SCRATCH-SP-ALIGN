@@ -16,6 +16,16 @@
                             "Human",
                             "Mouse"
                         ]
+                    },
+                    "modality": {
+                        "type": "string",
+                        "title": "Sequencing modality",
+                        "default": "GEX",
+                        "enum": [
+                            "GEX",
+                            "TCR",
+                            "GEX+TCR"
+                        ]
                     }
                 }
             },
