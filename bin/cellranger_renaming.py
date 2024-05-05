@@ -6,8 +6,15 @@ import re
 
 def is_already_10x_format(sample_name, filename):
     """
-    Checks if the filename is already in the 10x naming format:
+    Determine if the filename matches the expected 10x Genomics format.
     {sample_name}_S1_L001_R{1,2}_001.fastq.gz
+
+    Args:
+        filename (str): The name of the file to check.
+        sample_name (str): The sample name to use in the format check.
+
+    Returns:
+        bool: True if filename matches the 10x Genomics format, False otherwise.
     """
     pattern = re.compile(rf'^{re.escape(sample_name)}_S1_L001_R[12]_001\.fastq\.gz$')
     return pattern.match(filename)
@@ -15,8 +22,12 @@ def is_already_10x_format(sample_name, filename):
 def rename_fastqs(sample_name, fastq_dir):
     """
     Renames FASTQ files in the specified directory based on the sample name provided.
-    Assumes files are named as SRX..._SRR..._{1,2}.fastq.gz and renames them to
-    {sample_name}_S1_L001_R{1,2}_001.fastq.gz format.
+
+    Args:
+        fastq_dir (str): Directory containing the FASTQ files.
+        sample_name (str): Sample name to use in the new filename.
+    Returns:
+        string: Rename files
     """
     # Iterate over all files in the directory
     for filename in os.listdir(fastq_dir):
@@ -40,3 +51,5 @@ def rename_fastqs(sample_name, fastq_dir):
 if __name__ == "__main__":
     sample_name, fastq_dir = sys.argv[1], sys.argv[2]
     rename_fastqs(sample_name, fastq_dir)
+
+
