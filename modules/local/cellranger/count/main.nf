@@ -1,5 +1,6 @@
 process CELLRANGER_COUNT {
-    tag "Running counts on ${sample}"
+    
+    tag "Running GEX on ${sample}"
     label 'process_high'
 
     // container "oandrefonseca/scaligners:main"
@@ -11,7 +12,6 @@ process CELLRANGER_COUNT {
 
     output:
         tuple val(sample), path("gex/${sample}/outs/*"), emit: outs
-        path("versions.yml")                           , emit: versions
 
     when:
         task.ext.when == null || task.ext.when

@@ -1,5 +1,6 @@
 process CELLRANGER_VDJ {
-    tag "Running counts on ${sample}"
+    
+    tag "Running VDJ on ${sample}"
     label 'process_high'
 
     // container "oandrefonseca/scaligners:main"
@@ -10,8 +11,7 @@ process CELLRANGER_VDJ {
         path(reference)
 
     output:
-        tuple val(sample), path("gex/${sample}/outs/*"), emit: outs
-        path("versions.yml")                           , emit: versions
+        tuple val(sample), path("tcr/${sample}/outs/*"), emit: outs
 
     when:
         task.ext.when == null || task.ext.when
@@ -40,17 +40,17 @@ process CELLRANGER_VDJ {
         """
             cellranger_renaming.py "${sample}" .
 
-            mkdir -p gex/${sample}/outs/filtered_feature_bc_matrix
+            mkdir -p tcr/${sample}/outs/filtered_feature_bc_matrix
 
-            touch gex/${sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz  
-            touch gex/${sample}/outs/filtered_feature_bc_matrix/features.tsv.gz
-            touch gex/${sample}/outs/filtered_feature_bc_matrix/matrix.mtx.gz
-            touch gex/${sample}/outs/metrics_summary.csv
+            touch tcr/${sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz  
+            touch tcr/${sample}/outs/filtered_feature_bc_matrix/features.tsv.gz
+            touch tcr/${sample}/outs/filtered_feature_bc_matrix/matrix.mtx.gz
+            touch tcr/${sample}/outs/metrics_summary.csv
             
             cat <<-END_VERSIONS > versions.yml
             "${task.process}":
                 cellranger: \$(echo \$( cellranger --version 2>&1) | sed 's/^.*[^0-9]\\([0-9]*\\.[0-9]*\\.[0-9]*\\).*\$/\\1/' )
-                referemce: ${reference}
+                referemce: ${reference.name}
             END_VERSIONS
         """
 }
