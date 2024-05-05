@@ -12,6 +12,7 @@ workflow SCRATCH_ALIGN {
 
     take:
         ch_sample_table // channel: [ val(sample), [ fastq ] ]
+        modality        // string: GEX, TCR, or GEX+TCR
         genome          // string: genome code
 
     main:
@@ -43,7 +44,7 @@ workflow SCRATCH_ALIGN {
                 println("No TCR samples were found. Skipping CELLRANGER_VDJ process.")
             }
 
-        if(params.modality =~ /\b(GEX|GEX+TCR)/) {
+        if(modality =~ /\b(GEX)/) {
 
             // Staging Cellranger Counts indexes
             gex_indexes = params.genomes[genome].gex
@@ -62,7 +63,7 @@ workflow SCRATCH_ALIGN {
 
         }
 
-        if(params.modality =~ /\b(TCR|GEX+TCR)/) {
+        if(modality =~ /\b(TCR)/) {
 
             // Staging Cellranger VDJ reference
             vdj_indexes = params.genomes[genome].vdj

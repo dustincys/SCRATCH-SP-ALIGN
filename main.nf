@@ -31,6 +31,7 @@ workflow {
     // GEX+VDJ alignment
     SCRATCH_ALIGN(
         ch_samplesheet,
+        params.modality,
         params.genome
     )
 
