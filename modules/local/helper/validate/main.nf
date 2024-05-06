@@ -2,10 +2,7 @@ process SAMPLESHEET_CHECK {
     tag "Samplesheet $samplesheet"
     label 'process_single'
 
-    conda "conda-forge::python=3.8.3"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/python:3.8.3' :
-        'quay.io/biocontainers/python:3.8.3' }"
+    container "nfcore/cellranger:7.1.0"
 
     input:
         path samplesheet

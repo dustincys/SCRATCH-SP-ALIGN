@@ -3,7 +3,7 @@ process CELLRANGER_COUNT {
     tag "Running GEX on ${sample}"
     label 'process_high'
 
-    container "oandrefonseca/scaligners:main"
+    container "nfcore/cellranger:7.1.0"
     publishDir "${params.outdir}/${params.project_name}", mode: 'copy', overwrite: true
 
     input:

@@ -2,7 +2,7 @@ process SEURAT_CLUSTERING {
     tag "${sample}"
     label 'process_high'
 
-    container "oandrefonseca/scaligners:main"
+    container "nfcore/cellranger:7.1.0"
     publishDir "${params.outdir}/${params.project_name}/data/sample", mode: 'copy'
 
     input:
