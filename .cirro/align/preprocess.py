@@ -31,7 +31,7 @@ def setup_input_parameters(ds: PreprocessDataset):
     # Adding new samplesheet including modality
     ds.logger.info("Changing samplesheet dynamically:")
 
-    if ds.params.get("samplesheet"):
+    if ds.params.get("samplesheet") is None:
         ds.add_param(
             "samplesheet",
             "${launchDir}/samplesheet.csv"
