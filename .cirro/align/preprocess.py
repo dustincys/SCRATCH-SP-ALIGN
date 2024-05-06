@@ -4,8 +4,11 @@ from cirro.helpers.preprocess_dataset import PreprocessDataset
 import pandas as pd
 import os
 
-def adding_modality(ds: PreprocessDataset) -> pd.DataFrame:
+def samplesheet_creation(ds: PreprocessDataset) -> pd.DataFrame:
     
+    # Clean samplesheet
+    META_COLUMNS = ["sample", "modality", "patient_id", "timepoint"]
+
     # Make a wide sample_table
     ds.logger.info("Pivoting samplehsheet:")
 
@@ -19,10 +22,15 @@ def adding_modality(ds: PreprocessDataset) -> pd.DataFrame:
         by="sample"
     )
 
+    ds.logger.info("Checking transposed columns:")
+    ds.logger.info(sample_table.columns)
+
     # How can I read the metadata? Is it ds.samplesheet?
     ds.logger.info("Adding modality column from:")
-    sample_table = sample_table.merge(ds.samplesheet)
+    sample_table = sample_table.merge(ds.samplesheet[META_COLUMNS])
+    
     ds.logger.info(sample_table.to_csv(index=None))
+    ds.logger.info(sample_table.columns)
 
     return sample_table
 
@@ -58,7 +66,7 @@ if __name__ == "__main__":
     ds.logger.info(os.listdir("."))
 
     # Make a sample table of the input data
-    # sample_table = adding_modality(ds)
+    sample_table = samplesheet_creation(ds)
     sample_table.to_csv("samplesheet.csv", index=None)
 
     setup_input_parameters(ds)
