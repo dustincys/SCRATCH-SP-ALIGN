@@ -17,7 +17,7 @@ if __name__ == "__main__":
     setup_input_parameters(ds)
 
     ds.logger.info("Standard Cirro's samplesheet:")
-    ds.logger.info(ds.wide_samplesheet.sample_table.to_csv(index=None))
+    ds.logger.info(ds.wide_samplesheet.to_csv(index=None))
 
     ds.logger.info("Exported paths:")
     ds.logger.info(os.environ['PATH'])
