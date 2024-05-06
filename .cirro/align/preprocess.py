@@ -34,7 +34,7 @@ def setup_input_parameters(ds: PreprocessDataset):
     if ds.params.get("samplesheet"):
         ds.add_param(
             "samplesheet",
-            "${launchDir}/samplesheet.updated.csv"
+            "${launchDir}/samplesheet.csv"
         )
 
 if __name__ == "__main__":
@@ -51,18 +51,17 @@ if __name__ == "__main__":
     ds.logger.info(ds.samplesheet.columns)
     ds.logger.info(ds.samplesheet)
 
-    ds.logger.info("Getwd directory:")
+    ds.logger.info("Getwd/LaunchDir directory:")
     ds.logger.info(os.getcwd())
-    ds.logger.info(print("${launchDir}"))
 
     ds.logger.info("List workdir directory:")
     ds.logger.info(os.listdir("."))
 
     # Make a sample table of the input data
-    sample_table = adding_modality(ds)
-    sample_table.to_csv("${launchDir}/samplesheet.csv", index=None)
+    # sample_table = adding_modality(ds)
+    sample_table.to_csv("samplesheet.csv", index=None)
 
-    # setup_input_parameters(ds)
+    setup_input_parameters(ds)
 
     ds.logger.info("Printing out parameters:")
     ds.logger.info(ds.params)
