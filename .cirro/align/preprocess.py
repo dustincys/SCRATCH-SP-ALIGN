@@ -18,7 +18,10 @@ if __name__ == "__main__":
     ds = PreprocessDataset.from_running()
     setup_input_parameters(ds)
 
-    ds.logger.info("Printing exported paths:")
+    ds.logger.info("Standard Cirro's samplesheet:")
+    ds.logger.info(ds.samplesheet)
+
+    ds.logger.info("Exported paths:")
     ds.logger.info(os.environ['PATH'])
 
     ds.logger.info("Printing out parameters:")
