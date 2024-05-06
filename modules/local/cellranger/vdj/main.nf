@@ -4,14 +4,13 @@ process CELLRANGER_VDJ {
     label 'process_high'
 
     container "nfcore/cellranger:7.1.0"
-    publishDir "${params.outdir}/${params.project_name}", mode: 'copy', overwrite: true
 
     input:
         tuple val(sample), path(reads)
         path(reference)
 
     output:
-        tuple val(sample), path("tcr/${sample}/outs/*"), emit: outs
+        tuple val(sample), path("${sample}/outs/*"), emit: outs
 
     when:
         task.ext.when == null || task.ext.when
@@ -40,13 +39,12 @@ process CELLRANGER_VDJ {
         """
             cellranger_renaming.py "${sample}" .
 
-            mkdir -p tcr/${sample}/outs/filtered_feature_bc_matrix
+            mkdir -p ${sample}/outs/
+            touch ${sample}/outs/filtered_contig.fasta 
+            touch ${sample}/outs/filtered_contig_annotations.csv 
+            touch ${sample}/outs/filtered_contig.fastq 
+            touch ${sample}/outs/metrics_summary.csv
 
-            touch tcr/${sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz  
-            touch tcr/${sample}/outs/filtered_feature_bc_matrix/features.tsv.gz
-            touch tcr/${sample}/outs/filtered_feature_bc_matrix/matrix.mtx.gz
-            touch tcr/${sample}/outs/metrics_summary.csv
-            
             cat <<-END_VERSIONS > versions.yml
             "${task.process}":
                 cellranger: \$(echo \$( cellranger --version 2>&1) | sed 's/^.*[^0-9]\\([0-9]*\\.[0-9]*\\.[0-9]*\\).*\$/\\1/' )

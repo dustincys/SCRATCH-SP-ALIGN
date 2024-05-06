@@ -4,14 +4,13 @@ process CELLRANGER_COUNT {
     label 'process_high'
 
     container "nfcore/cellranger:7.1.0"
-    publishDir "${params.outdir}/${params.project_name}", mode: 'copy', overwrite: true
 
     input:
         tuple val(sample), path(reads)
         path(reference)
 
     output:
-        tuple val(sample), path("gex/${sample}/outs/*"), emit: outs
+        tuple val(sample), path("${sample}/outs/*"), emit: outs
 
     when:
         task.ext.when == null || task.ext.when
@@ -41,12 +40,12 @@ process CELLRANGER_COUNT {
         """
             cellranger_renaming.py "${sample}" .
 
-            mkdir -p gex/${sample}/outs/filtered_feature_bc_matrix
+            mkdir -p ${sample}/outs/filtered_feature_bc_matrix
 
-            touch gex/${sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz  
-            touch gex/${sample}/outs/filtered_feature_bc_matrix/features.tsv.gz
-            touch gex/${sample}/outs/filtered_feature_bc_matrix/matrix.mtx.gz
-            touch gex/${sample}/outs/metrics_summary.csv
+            touch ${sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz  
+            touch ${sample}/outs/filtered_feature_bc_matrix/features.tsv.gz
+            touch ${sample}/outs/filtered_feature_bc_matrix/matrix.mtx.gz
+            touch ${sample}/outs/metrics_summary.csv
             
             cat <<-END_VERSIONS > versions.yml
             "${task.process}":

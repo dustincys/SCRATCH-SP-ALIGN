@@ -39,7 +39,7 @@ workflow {
 
 workflow.onComplete {
     log.info(
-        workflow.success ? "\nDone! Open the following report in your browser -> ${launchDir}/${params.project_name}/report/index.html\n" :
+        workflow.success ? "\nDone! Open the following report in your browser -> ${launchDir}/report/index.html\n" :
         "Oops... Something went wrong"
     )
 }
