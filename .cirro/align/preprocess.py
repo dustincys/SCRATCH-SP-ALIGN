@@ -5,7 +5,6 @@ import pandas as pd
 import os
 
 def samplesheet_creation(ds: PreprocessDataset) -> pd.DataFrame:
-    
     # Clean samplesheet
     META_COLUMNS = ["sample", "modality", "patient_id", "timepoint"]
 
