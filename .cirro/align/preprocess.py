@@ -22,7 +22,6 @@ def adding_modality(ds: PreprocessDataset) -> pd.DataFrame:
     # How can I read the metadata? Is it ds.samplesheet?
     ds.logger.info("Adding modality column from:")
     sample_table = sample_table.merge(ds.samplesheet)
-
     ds.logger.info(sample_table.to_csv(index=None))
 
     return sample_table
@@ -30,6 +29,9 @@ def adding_modality(ds: PreprocessDataset) -> pd.DataFrame:
 def setup_input_parameters(ds: PreprocessDataset):
 
     # Adding new samplesheet including modality
+
+    ds.logger.info("Changing samplesheet dynamically:")
+
     if ds.params.get("samplesheet"):
         ds.add_param(
             "samplesheet",
@@ -52,16 +54,16 @@ if __name__ == "__main__":
 
     ds.logger.info("Getwd directory:")
     ds.logger.info(os.getcwd())
+    ds.logger.info(print("${launchDir}"))
 
     ds.logger.info("List workdir directory:")
     ds.logger.info(os.listdir("."))
 
     # Make a sample table of the input data
-    if 'modality' not in ds.samplesheet.columns:
-        sample_table = adding_modality(ds)
-        sample_table.to_csv("samplesheet.updated.csv", index=None)
+    sample_table = adding_modality(ds)
+    sample_table.to_csv("samplesheet.csv", index=None)
 
-        setup_input_parameters(ds)
+    # setup_input_parameters(ds)
 
     ds.logger.info("Printing out parameters:")
     ds.logger.info(ds.params)
