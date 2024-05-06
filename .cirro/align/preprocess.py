@@ -29,7 +29,6 @@ def adding_modality(ds: PreprocessDataset) -> pd.DataFrame:
 def setup_input_parameters(ds: PreprocessDataset):
 
     # Adding new samplesheet including modality
-
     ds.logger.info("Changing samplesheet dynamically:")
 
     if ds.params.get("samplesheet"):
@@ -61,7 +60,7 @@ if __name__ == "__main__":
 
     # Make a sample table of the input data
     sample_table = adding_modality(ds)
-    sample_table.to_csv("samplesheet.csv", index=None)
+    sample_table.to_csv("${launchDir}/samplesheet.csv", index=None)
 
     # setup_input_parameters(ds)
 
