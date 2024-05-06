@@ -20,21 +20,28 @@ def adding_modality(ds: PreprocessDataset) -> pd.DataFrame:
     )
 
     # How can I read the metadata? Is it ds.samplesheet?
-    # sample_table = sample_table.merge(ds.samplesheet)
-    # return sample_table
+    sample_table = sample_table.merge(ds.samplesheet)
+
+    ds.logger.info(sample_table.to_csv(index=None))
+
+    return sample_table
 
 if __name__ == "__main__":
 
     ds = PreprocessDataset.from_running()
 
+    ds.logger.info("Exported paths:")
+    ds.logger.info(os.environ['PATH'])
+
     ds.logger.info("Files annotated in the dataset:")
     ds.logger.info(ds.files)
 
     ds.logger.info("Checking medata:")
-    ds.logger.info(ds.ds.samplesheet)
+    ds.logger.info(ds.samplesheet)
 
-    ds.logger.info("Exported paths:")
-    ds.logger.info(os.environ['PATH'])
+    # Make a sample table of the input data
+    sample_table = make_sample_table(ds)
+    sample_table.to_csv("sample_table.csv", index=None)
 
     ds.logger.info("Printing out parameters:")
     ds.logger.info(ds.params)
