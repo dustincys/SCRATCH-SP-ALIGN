@@ -3,7 +3,7 @@ process CELLRANGER_VDJ {
     tag "Running VDJ on ${sample}"
     label 'process_high'
 
-    // container "oandrefonseca/scaligners:main"
+    container "oandrefonseca/scaligners:main"
     publishDir "${params.outdir}/${params.project_name}", mode: 'copy', overwrite: true
 
     input:
