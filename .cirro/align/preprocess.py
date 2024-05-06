@@ -4,7 +4,7 @@ from cirro.helpers.preprocess_dataset import PreprocessDataset
 import pandas as pd
 import os
 
-def adding_modality(ds: PreprocessDataset) -> pd.DataFrame):
+def adding_modality(ds: PreprocessDataset) -> pd.DataFrame:
     
     # Make a wide sample_table
     ds.logger.info("Adding modality column from:")
