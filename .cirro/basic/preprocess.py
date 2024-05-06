@@ -4,12 +4,14 @@ from cirro.helpers.preprocess_dataset import PreprocessDataset
 import pandas as pd
 import os
 
-def adding_modality():
-    pass
-
 def setup_input_parameters(ds: PreprocessDataset):
+
     # If the user did not select a custom malignant table, use the default
-    pass
+    if ds.params.get("input_cell_mask") is None:
+        ds.add_param(
+            "input_cell_mask",
+            "${baseDir}/assets/NO_FILE"
+        )
 
 if __name__ == "__main__":
 
@@ -17,7 +19,7 @@ if __name__ == "__main__":
     setup_input_parameters(ds)
 
     ds.logger.info("Standard Cirro's samplesheet:")
-    ds.logger.info(ds.wide_samplesheet)
+    ds.logger.info(ds.samplesheet)
 
     ds.logger.info("Exported paths:")
     ds.logger.info(os.environ['PATH'])
