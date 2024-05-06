@@ -19,8 +19,11 @@ if __name__ == "__main__":
     ds.logger.info("Files annotated in the dataset:")
     ds.logger.info(ds.files)
 
+    ds.logger.info("Printing metadata related to dataset:")
+    ds.logger.info(ds.samplesheet)
+
     # Make a wide sample_table
-    ds.logger.info("Pivoting to wide format")
+    ds.logger.info("Pivoting to wide format:")
     sample_table = ds.wide_samplesheet(
         index=["sampleIndex", "sample", "lane"],
         columns="read",
