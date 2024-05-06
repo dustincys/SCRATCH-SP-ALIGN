@@ -21,12 +21,8 @@ workflow SCRATCH_ALIGN {
         ch_versions  = Channel.empty()
 
         // Sample check
-        // ch_sample_table = SAMPLESHEET_CHECK(ch_sample_table)
-        //     .csv
-        //     .splitCsv(header:true, sep:',')
-        //     .map{ row -> tuple row.sample, row.fastq_1, row.fastq_2, row.modality }
-
-        ch_sample_table = ch_sample_table
+        ch_sample_table = SAMPLESHEET_CHECK(ch_sample_table)
+            .csv
             .splitCsv(header:true, sep:',')
             .map{ row -> tuple row.sample, row.fastq_1, row.fastq_2, row.modality }
 
