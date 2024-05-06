@@ -30,10 +30,10 @@ def adding_modality(ds: PreprocessDataset) -> pd.DataFrame:
 def setup_input_parameters(ds: PreprocessDataset):
 
     # Adding new samplesheet including modality
-    if ds.params.get("samplesheet") is None:
+    if ds.params.get("samplesheet"):
         ds.add_param(
             "samplesheet",
-            "sample_table.csv"
+            "samplesheet.updated.csv"
         )
 
 if __name__ == "__main__":
@@ -51,10 +51,11 @@ if __name__ == "__main__":
     ds.logger.info(ds.samplesheet)
 
     # Make a sample table of the input data
-    sample_table = adding_modality(ds)
-    sample_table.to_csv("sample_table.csv", index=None)
+    if 'modality' not in ds.samplesheet.columns:
+        sample_table = adding_modality(ds)
+        sample_table.to_csv("samplesheet.updated.csv", index=None)
 
-    setup_input_parameters(ds)
+        setup_input_parameters(ds)
 
     ds.logger.info("Printing out parameters:")
     ds.logger.info(ds.params)
