@@ -18,13 +18,7 @@ website:
     align: center
 
     contents:
-      - href: index.qmd
-        text: Introduction
       - auto: "step*.qmd"
-      - href: references.qmd
-        text: References
-      - href: about.qmd
-        text: About
 
   page-footer:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
