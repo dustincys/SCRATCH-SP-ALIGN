@@ -10,7 +10,7 @@ include { SCRATCH_ALIGN } from './subworkflow/local/scratch_align.nf'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-if (params.samplesheet) { seurat_object = file(params.samplesheet) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
+if (params.samplesheet) { samplesheet = file(params.samplesheet) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -18,10 +18,10 @@ if (params.samplesheet) { seurat_object = file(params.samplesheet) } else { exit
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow {
+workflow SCRATCH_ALIGN_WORKFLOW {
 
     // Description
-    ch_samplesheet = Channel.fromPath(params.samplesheet, checkIfExists: true)
+    ch_samplesheet = Channel.fromPath(samplesheet, checkIfExists: true)
 
     // Description
     ch_template    = Channel.fromPath(params.template, checkIfExists: true)
@@ -36,6 +36,9 @@ workflow {
     )
 
 }
+
+// workflow SCRATCH_QC_WORKFLOW {}
+// workflow SCRATCH_CLUSTERING_WORKFLOW {}
 
 workflow.onComplete {
     log.info(
