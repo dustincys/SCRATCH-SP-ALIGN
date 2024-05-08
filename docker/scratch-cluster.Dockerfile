@@ -9,16 +9,6 @@ ENV TZ=US/Central
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone
 
-# Install system packages required for Python and Micromamba
-RUN --mount=type=cache,target=/var/cache/apt apt-get update && \
-    apt-get install -y --no-install-recommends \
-        ca-certificates \
-        bzip2 \
-        libglib2.0-0 \
-        libxext6 \
-        libsm6 \
-        libxrender1
-
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     software-properties-common \
