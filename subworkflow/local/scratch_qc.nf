@@ -54,6 +54,7 @@ workflow SCRATCH_QC {
             .groupTuple()
 
         ch_cell_matrices = ch_cell_matrices
+            .map{ sample, files -> [sample, files.findAll{ it.toString().endsWith("metrics_summary.csv") || it.toString().contains("filtered_feature_bc_matrix") }] }
             .map{ sample, files -> [sample, files.collect { it.toString().replace(".h5", "") }] }
             .map{ sample, files -> [sample, files[0], files[1]]}
 
