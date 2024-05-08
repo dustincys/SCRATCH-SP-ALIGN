@@ -105,7 +105,8 @@ RUN python3 -m pip install --no-cache-dir jupyter-cache
 RUN python3 -m pip install --no-cache-dir papermill
 
 # Additional packages
-RUN Rscript -e "BiocManager::install('rhdf5r')"
+RUN apt-get install -y libhdf5-dev
+RUN Rscript -e "install.packages('hdf5r')"
 
 # Cleaning apt-get cache
 RUN apt-get clean
