@@ -5,13 +5,25 @@ on:
     branches: [ main ]
     tags: [ 'v*.*.*' ]
     paths: 
-      - 'docker/scratch-align.Dockerfile.Dockerfile'
+      - 'docker/scratch-align.Dockerfile'
+      - 'docker/scratch-qc.Dockerfile'
+      - 'docker/scratch-cluster.Dockerfile'
       - '.github/workflows/docker-basic-publish.yml'
 
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - context: "scratch-align"
+            dockerfile: "scratch-align.Dockerfile"
+          - context: "scratch-qc"
+            dockerfile: "scratch-qc.Dockerfile"
+          - context: "scratch-cluster"
+            dockerfile: "scratch-cluster.Dockerfile"
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -26,7 +38,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: oandrefonseca/scratch-align.Dockerfile
+          images: oandrefonseca/${{ matrix.context }}
           tags: |
             type=schedule
             type=ref,event=branch
@@ -43,10 +55,10 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./docker
-          file: ./docker/scratch-align.Dockerfile
+          file: ./docker/${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
-          cache-from: type=gha,scope=scratch-align.Dockerfile
-          cache-to: type=gha,mode=max,scope=scratch-align.Dockerfile
+          cache-from: type=gha,scope=${{ matrix.context }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.context }}

@@ -39,18 +39,6 @@ RUN dpkg -i quarto-1.4.553-linux-amd64.deb
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
 
-# Install Cellranger
-ARG CELLRANGER_VERSION='7.1.0'
-
-## Please change the link considering the 10x Genomics End User Software License Agreement
-ARG CELLRANGER_URL="https://storage.googleapis.com/btc-refdata/scRNA/software/cellranger-${CELLRANGER_VERSION}.tar.gz"
-ENV PATH=/opt/cellranger-${CELLRANGER_VERSION}:$PATH
-
-# CellRanger binaries
-RUN wget ${CELLRANGER_URL} -O cellranger-${CELLRANGER_VERSION}.tar.gz
-RUN tar -zxvf cellranger-${CELLRANGER_VERSION}.tar.gz \
-    && rm -rf cellranger-${CELLRANGER_VERSION}.tar.gz
-
 # Install Python3
 RUN apt-get install -y \
     python3 \
