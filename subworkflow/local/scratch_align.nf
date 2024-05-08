@@ -61,7 +61,7 @@ workflow SCRATCH_ALIGN {
                 gex_indexes
             ) 
 
-        ch_cellrange_outs = ch_gex_alignment.outs
+            ch_cellrange_outs = ch_gex_alignment.outs
 
         }
 
@@ -82,7 +82,7 @@ workflow SCRATCH_ALIGN {
                 vdj_indexes
             )
 
-        ch_cellrange_outs = ch_tcr_alignment.outs
+            ch_cellrange_outs = ch_tcr_alignment.outs
 
         }
         

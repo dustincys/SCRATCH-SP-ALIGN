@@ -7,7 +7,6 @@ import os
 if __name__ == "__main__":
 
     ds = PreprocessDataset.from_running()
-    setup_input_parameters(ds)
 
     ds.logger.info("Exported paths:")
     ds.logger.info(os.environ['PATH'])

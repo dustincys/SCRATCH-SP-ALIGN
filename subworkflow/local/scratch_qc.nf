@@ -13,6 +13,25 @@ merge_script     = "${workflow.projectDir}/modules/local/seurat/merge/notebook_s
 doubletfinder    = "${workflow.projectDir}/modules/local/doubletfinder/notebook_doublet_detection.qmd"
 scdblfinder      = "${workflow.projectDir}/modules/local/seurat/cluster/notebook_scdblfinder.qmd"
 
+process DEBUG {
+
+    publishDir "${params.outdir}/data/sample/${sample}", mode: 'copy'
+
+    input:
+        tuple val(sample), path(metrices), path(csv_metrics)
+
+    output:
+        path(metrices)
+        path(csv_metrics)
+        path("output")
+
+    script:
+        """
+            echo ${val} ${metrices} ${csv_metrics} > output
+        """
+
+}
+
 workflow SCRATCH_QC {
 
     take:
@@ -24,12 +43,24 @@ workflow SCRATCH_QC {
         // Channel definitions
         ch_versions  = Channel.empty()
 
-        // ch_cell_matrices = ch_gex_outs
-        //     .map{sample, files -> [sample, files.findAll{ it.toString().endsWith("metrics_summary.csv") || it.toString().endsWith("filtered_feature_bc_matrix") }]}
-        //     .map{sample, files -> [sample, files[0], files[1]]}
+        // Grouping cellranger outputs
+        ch_cell_matrices = ch_gex_matrices
+            .map { file -> 
+                def sample = file.parent.parent.name
+                return [sample, file]
+            }
+        
+        ch_cell_matrices = ch_cell_matrices
+            .groupTuple()
+
+        ch_cell_matrices = ch_cell_matrices
+            .map{ sample, files -> [sample, files.collect { it.toString().replace(".h5", "") }] }
+            .map{ sample, files -> [sample, files[0], files[1]]}
+
+        DEBUG(ch_cell_matrices)
 
         // ch_cell_matrices = ch_cell_matrices
-        //     .combine(ch_meta_data)
+        //     .combine(ch_exp_table)
 
         // // Performing QC steps
         // SEURAT_QUALITY(
