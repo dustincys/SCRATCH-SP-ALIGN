@@ -12,7 +12,6 @@ include { SCRATCH_QC }    from './subworkflow/local/scratch_qc.nf'
 if (params.input_gex_matrices_path) { input_gex_matrices = file(params.input_gex_matrices_path) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
 if (params.input_exp_table) { input_exp_table = file(params.input_exp_table) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
 
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN ALL WORKFLOWS
@@ -31,8 +30,8 @@ workflow {
     """
 
     // Description
-    ch_gex_matrices = Channel.fromPath(input_gex_matrices, checkIfExists: true)
-    ch_exp_table    = Channel.fromPath(input_exp_table, checkIfExists: true)
+    ch_gex_matrices = Channel.fromPath(params.input_gex_matrices_path, checkIfExists: true)
+    ch_exp_table    = Channel.fromPath(params.input_exp_table, checkIfExists: true)
 
     // Description
     ch_template    = Channel.fromPath(params.template, checkIfExists: true)
