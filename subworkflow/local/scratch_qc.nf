@@ -16,6 +16,7 @@ scdblfinder      = "${workflow.projectDir}/modules/local/seurat/cluster/notebook
 process DEBUG {
 
     publishDir "${params.outdir}/data/sample/${sample}", mode: 'copy'
+    container "nfcore/cellranger:7.1.0"
 
     input:
         tuple val(sample), path(metrices), path(csv_metrics)
