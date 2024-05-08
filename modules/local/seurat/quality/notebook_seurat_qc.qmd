@@ -22,7 +22,6 @@ lightbox:
 params:
   project_name: 'Project'
   sample_name: 'Sample_001'
-  meta_data: 'path/to/meta_data'
   input_gex_matrices: 'path/to/filtered_feature_bc_matrix'
   csv_metrics: 'path/to/metrics_summary.csv'
   thr_estimate_n_cells: 300
@@ -48,7 +47,6 @@ params:
 project_name <- params$project_name
 sample_name <- params$sample_name
 
-meta_data <- params$meta_data
 input_gex_matrices <- params$input_gex_matrices
 csv_metrics <- params$csv_metrics
 
@@ -186,7 +184,7 @@ The Cellranger report can be found, [here](outs/web_summary.html).
 
 ```{r seurat_object}
 
-expression_matrix <- Read10X(data.dir = input_input_gex_matrices)
+expression_matrix <- Read10X_h5(data.dir = input_input_gex_matrices)
 seurat_object = CreateSeuratObject(
   counts = expression_matrix,
   project = sample_name
@@ -219,26 +217,6 @@ ggplot(data = gpdat, aes(x = orig.ident, y = value)) +
     legend.position = 'none'
   )
 
-
-```
-
-```{r meta_data}
-
-# Adding meta-data
-meta_data_df <- read_csv(file = meta_data)
-
-meta_data_df <- meta_data_df %>%
-  filter(sample_id == sample_name)
-
-if(nrow(meta_data_df) >= 1) {
-  seurat_object@meta.data <- cbind(
-    seurat_object@meta.data,
-    meta_data_df
-  )
-
-  print(meta_data_df)
-
-}
 
 ```
 
@@ -340,7 +318,6 @@ print(
   list(
       project_name = project_name,
       sample_name = sample_name,
-      meta_data = meta_data,
       input_gex_matrices = input_gex_matrices,
       csv_metrics = csv_metrics,
       thr_estimate_n_cells = thr_estimate_n_cells,

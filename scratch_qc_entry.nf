@@ -33,15 +33,10 @@ workflow {
     ch_gex_matrices = Channel.fromPath(params.input_gex_matrices_path, checkIfExists: true)
     ch_exp_table    = Channel.fromPath(params.input_exp_table, checkIfExists: true)
 
-    // Description
-    ch_template    = Channel.fromPath(params.template, checkIfExists: true)
-    ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
-        .collect()
-
-    // QC for GEX
+    // Filtering sample and cells
     SCRATCH_QC(
         ch_gex_matrices,
-        ch_exp_table,
+        ch_exp_table
     )
 
 }

@@ -2,36 +2,11 @@
 // Description
 //
 
-// include { SEURAT_QUALITY            } from '../../modules/local/seurat/quality/main.nf'
+include { SEURAT_QUALITY            } from '../../modules/local/seurat/quality/main.nf'
 // include { HELPER_SUMMARIZE          } from '../../modules/local/helper/summarize/main.nf'
 // include { SEURAT_MERGE              } from '../../modules/local/seurat/merge/main.nf'
 // include { DOUBLETFINDER             } from '../../modules/local/doubletfinder/main.nf'
 // include { SCDBLFINDER               } from '../../modules/local/doubletfinder/main.nf'
-
-// Importing Quarto notebooks
-merge_script     = "${workflow.projectDir}/modules/local/seurat/merge/notebook_seurat_merge.qmd"
-doubletfinder    = "${workflow.projectDir}/modules/local/doubletfinder/notebook_doublet_detection.qmd"
-scdblfinder      = "${workflow.projectDir}/modules/local/seurat/cluster/notebook_scdblfinder.qmd"
-
-process DEBUG {
-
-    publishDir "${params.outdir}/data/sample/${sample}", mode: 'copy'
-    container "nfcore/cellranger:7.1.0"
-
-    input:
-        tuple val(sample), path(metrices), path(csv_metrics)
-
-    output:
-        path(metrices)
-        path(csv_metrics)
-        path("output")
-
-    script:
-        """
-            echo ${sample} ${metrices} ${csv_metrics} > output
-        """
-
-}
 
 workflow SCRATCH_QC {
 
@@ -43,6 +18,17 @@ workflow SCRATCH_QC {
         
         // Channel definitions
         ch_versions  = Channel.empty()
+
+        // Importing notebook
+        ch_notebook_quality       = Channel.fromPath(params.notebook_quality, checkIfExists: true)
+        ch_notebook_merge         = Channel.fromPath(params.notebook_merge, checkIfExists: true)
+        ch_notebook_doubletfinder = Channel.fromPath(params.notebook_doubletfinder, checkIfExists: true)
+        ch_notebook_scdblfinder   = Channel.fromPath(params.notebook_scdblfinder, checkIfExists: true)
+
+        // Description
+        ch_template    = Channel.fromPath(params.template, checkIfExists: true)
+        ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
+            .collect()
 
         // Grouping cellranger outputs
         ch_cell_matrices = ch_gex_matrices
@@ -56,14 +42,16 @@ workflow SCRATCH_QC {
 
         ch_cell_matrices = ch_cell_matrices
             .map{ sample, files -> [sample, files.findAll{ it.toString().endsWith("metrics_summary.csv") || it.toString().contains("filtered_feature_bc_matrix") }] }
-            // .map{ sample, files -> [sample, files.collect { it.toString().replace(".h5", "") }] }
             .map{ sample, files -> [sample, files[0], files[1]]}
+
 
         ch_cell_matrices
             .view()
 
-        DEBUG(
-            ch_cell_matrices
+        SEURAT_QUALITY(
+            ch_cell_matrices,
+            ch_notebook_quality,
+            ch_page_config
         )
 
         // ch_cell_matrices = ch_cell_matrices

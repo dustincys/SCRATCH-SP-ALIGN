@@ -37,8 +37,6 @@ params:
   auto_save: TRUE
 ---
 
-------------------------------------------------------------------------
-
 # Project Name: `r params$project_name`
 
 ```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = FALSE}

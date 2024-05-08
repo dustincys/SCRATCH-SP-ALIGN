@@ -50,4 +50,4 @@ RUN python3 -m pip install --no-cache-dir jupyter-cache
 RUN python3 -m pip install --no-cache-dir papermill
 
 # Command to run on container start
-CMD ["cellranger"]
+CMD ["bash"]
