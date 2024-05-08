@@ -27,7 +27,7 @@ process DEBUG {
 
     script:
         """
-            echo ${val} ${metrices} ${csv_metrics} > output
+            echo ${sample} ${metrices} ${csv_metrics} > output
         """
 
 }
@@ -57,7 +57,12 @@ workflow SCRATCH_QC {
             .map{ sample, files -> [sample, files.collect { it.toString().replace(".h5", "") }] }
             .map{ sample, files -> [sample, files[0], files[1]]}
 
-        DEBUG(ch_cell_matrices)
+        ch_cell_matrices
+            .view()
+
+        DEBUG(
+            ch_cell_matrices
+        )
 
         // ch_cell_matrices = ch_cell_matrices
         //     .combine(ch_exp_table)
