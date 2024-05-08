@@ -35,10 +35,6 @@ RUN apt-get update && apt-get install -y \
 RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.553/quarto-1.4.553-linux-amd64.deb -O quarto-1.4.553-linux-amd64.deb
 RUN dpkg -i quarto-1.4.553-linux-amd64.deb
 
-# Cleaning apt-get cache
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
-
 # Install Python3
 RUN apt-get install -y \
     python3 \
@@ -48,6 +44,10 @@ RUN apt-get install -y \
 RUN python3 -m pip install --no-cache-dir numpy pandas scikit-learn matplotlib seaborn jupyter
 RUN python3 -m pip install --no-cache-dir jupyter-cache
 RUN python3 -m pip install --no-cache-dir papermill
+
+# Cleaning apt-get cache
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
 # Command to run on container start
 CMD ["bash"]
