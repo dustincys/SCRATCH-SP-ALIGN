@@ -1,9 +1,9 @@
 process SEURAT_QUALITY {
 
     tag "Assessing quality ${sample_id}"
-    label 'process_high'
+    label 'process_medium'
 
-    container "oandrefonseca/scrpackages:main"
+    container "oandrefonseca/scratch-annotation:main" // to change
 
     input:
         tuple val(sample_id), path(csv_metrics), path(matrices)

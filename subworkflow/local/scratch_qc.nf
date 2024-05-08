@@ -41,9 +41,8 @@ workflow SCRATCH_QC {
             .groupTuple()
 
         ch_cell_matrices = ch_cell_matrices
-            .map{ sample, files -> [sample, files.findAll{ it.toString().endsWith("metrics_summary.csv") || it.toString().contains("filtered_feature_bc_matrix") }] }
+            .map{ sample, files -> [sample, files.findAll{ it.toString().endsWith("metrics_summary.csv") || it.toString().endsWith("filtered_feature_bc_matrix.h5") }] }
             .map{ sample, files -> [sample, files[0], files[1]]}
-
 
         ch_cell_matrices
             .view()
@@ -54,16 +53,7 @@ workflow SCRATCH_QC {
             ch_page_config
         )
 
-        // ch_cell_matrices = ch_cell_matrices
-        //     .combine(ch_exp_table)
-
-        // // Performing QC steps
-        // SEURAT_QUALITY(
-        //     ch_notebook_qc,
-        //     ch_cell_matrices
-        // )
-
-        // // Writing QC check
+        // Writing QC check
         // ch_quality_report = SEURAT_QUALITY.out.metrics
         //     .collect()
 

@@ -184,7 +184,7 @@ The Cellranger report can be found, [here](outs/web_summary.html).
 
 ```{r seurat_object}
 
-expression_matrix <- Read10X_h5(data.dir = input_input_gex_matrices)
+expression_matrix <- Read10X_h5(filename = input_input_gex_matrices)
 seurat_object = CreateSeuratObject(
   counts = expression_matrix,
   project = sample_name

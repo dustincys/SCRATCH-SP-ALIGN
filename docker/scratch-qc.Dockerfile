@@ -104,6 +104,9 @@ RUN python3 -m pip install --no-cache-dir numpy pandas scikit-learn matplotlib s
 RUN python3 -m pip install --no-cache-dir jupyter-cache
 RUN python3 -m pip install --no-cache-dir papermill
 
+# Additional packages
+RUN Rscript -e "BiocManager::install("rhdf5r")"
+
 # Cleaning apt-get cache
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
