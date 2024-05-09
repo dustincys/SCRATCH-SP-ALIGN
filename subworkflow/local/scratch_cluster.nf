@@ -29,6 +29,10 @@ workflow SCRATCH_CLUSTERING {
         ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
             .collect()
 
+        ch_page_config = ch_template
+            .map{ file -> file.find { it.toString().endsWith('.png') } }
+            .combine(ch_page_config)
+
         // Normalizing dataset
         SEURAT_NORMALIZE(
             ch_merge_object,
@@ -36,8 +40,8 @@ workflow SCRATCH_CLUSTERING {
             ch_page_config
         )
 
-        SEURAT_NORMALIZE.out.figures
-            .view()
+        // SEURAT_NORMALIZE.out.figures
+        //     .view()
 
         // Performing clustering        
         // SEURAT_CLUSTER(          

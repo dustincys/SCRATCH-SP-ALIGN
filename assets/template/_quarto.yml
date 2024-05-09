@@ -14,7 +14,7 @@ website:
   repo-actions: [issue]
 
   sidebar:
-    logo: https://github.com/WangLab-ComputationalBiology/SCRATCH-QC/blob/ed5b785a54d8ab2f0b7676f531387d831692c773/assets/template/SCRATCH.png
+    logo: SCRATCH.png
     pinned: true
     align: center
 
@@ -33,6 +33,7 @@ format:
     embed-resources: true
     code-fold: show
     code-tools: true
+    warnings: false
     df-print: paged
     fig-format: png
     fig-dpi: 300

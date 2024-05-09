@@ -124,6 +124,7 @@ seurat_object <- ScaleData(seurat_object)
 ## Dimensionality Reduction
 
 ```{r dimensionality_reduction}
+#| warning: false
 
 # Running PCA and printing out dimensions
 seurat_object <- RunPCA(seurat_object, verbose = FALSE, npcs = thr_n_dimensions)
@@ -137,6 +138,8 @@ print(seurat_object[["pca"]], dims = 1:5, nfeatures = 5)
 #| label: fig-loadings
 #| fig-cap: 'ElbowPlot'
 #| fig-cap-location: top
+#| fig-height: 14
+#| fig-width: 10
 
 VizDimLoadings(seurat_object, dims = 1:5, reduction = "pca")
 
@@ -152,6 +155,7 @@ The @fig-loadings Description
 #| label: fig-variable-plot
 #| fig-cap: 'ElbowPlot'
 #| fig-cap-location: top
+#| warning: false
 
 # Identify the 10 most highly variable genes
 variable_top10 <- head(VariableFeatures(seurat_object), 10)
