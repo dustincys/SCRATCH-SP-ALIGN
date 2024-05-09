@@ -74,13 +74,18 @@ ARG R_BIOC_DEPS="c(\
     'terra', \ 
     'ggrastr', \
     'Rsamtools', \
-    'UCell' \
+    'UCell', \
+    'DropletUtils', \
+    'MAST', \
+    'DESeq2', \
+    'batchelor', \
+    'scDblFinder' \
     )"
 
 # Setting repository URL
 ARG R_REPO="http://cran.us.r-project.org"
 
-# Caching R-lib on the building process --mount=type=cache,target=/usr/local/lib/R
+# Caching R-lib on the building process
 RUN Rscript -e "install.packages(${R_DEPS}, Ncpus = 8, repos = '${R_REPO}', clean = TRUE)"
 RUN Rscript -e "install.packages(${WEB_DEPS}, Ncpus = 8, repos = '${R_REPO}', clean = TRUE)"
 
