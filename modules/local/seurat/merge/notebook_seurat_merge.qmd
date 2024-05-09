@@ -191,6 +191,7 @@ if(auto_save) {
 ## Parameters log
 
 ```{r params_log, message = FALSE, warning = FALSE, echo = FALSE}
+#| code-fold: true
 
 print(params)
 
@@ -199,6 +200,7 @@ print(params)
 ## Session info
 
 ```{r session_info, message = FALSE, warning = FALSE, echo = FALSE}
+#| code-fold: true
 
 sessionInfo()
 
