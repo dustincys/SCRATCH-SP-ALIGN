@@ -1,6 +1,6 @@
 {
     "input_gex_matrices_path": "$.params.inputs[0].s3|/data/data/SCRATCH_ALIGN:CELLRANGER_COUNT/**/outs/*",
-    "input_exp_table": "$.params.inputs[0].s3|/data/data/pipeline_info/samplesheet.valid.csv",
+    "input_exp_table": "$.params.inputs[0].s3|/data/pipeline_info/samplesheet.valid.csv",
     "outdir": "$.params.dataset.s3|/data/",
     "organism": "$.params.dataset.paramJson.pipeline_parameters.organism",
     "modality": "$.params.dataset.paramJson.pipeline_parameters.modality",
