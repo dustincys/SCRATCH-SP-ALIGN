@@ -44,9 +44,13 @@ workflow SCRATCH_QC {
         ch_cell_matrices = ch_cell_matrices
             .groupTuple()
 
+        // Ensuring file order
         ch_cell_matrices = ch_cell_matrices
-            .map{ sample, files -> [sample, files.findAll{ it.toString().endsWith("metrics_summary.csv") || it.toString().endsWith("filtered_feature_bc_matrix.h5") }] }
-            .map{ sample, files -> [sample, files[0], files[1]]}
+            .map{ sample, files -> 
+                def csvFile = files.find { it.toString().endsWith("metrics_summary.csv") }
+                def h5File = files.find { it.toString().endsWith("filtered_feature_bc_matrix.h5") }
+                [sample, csvFile, h5File]
+            }
 
         ch_cell_matrices
             .view()
@@ -76,6 +80,9 @@ workflow SCRATCH_QC {
             .filter{sample, object, status -> status.toString().endsWith('SUCCESS.txt')}
             .map{sample, object, status -> object}
             .collect()
+
+        ch_qc_approved
+            .view()
 
         ch_qc_approved
             .ifEmpty{error 'No samples matched QC expectations.'}

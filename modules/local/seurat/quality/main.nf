@@ -29,12 +29,13 @@ process SEURAT_QUALITY {
         def param_file = task.ext.args ? "-P sample_name:${sample_id} -P csv_metrics:${csv_metrics} -P input_gex_matrices:${matrices} -P ${task.ext.args}" : ""
         def notebook_sample = "notebook_${sample_id}"
         """
-        touch ${notebook_sample}.html
+        mkdir -p objects log figures report
+
+        touch report/${notebook_sample}.html
         touch ${sample_id}_metrics_upgrade.csv
 
-        mkdir -p objects log figures
         touch log/SUCCESS.txt 
-        touch objects/${sample_id}.RDS
-        echo "${param_file}" > objects/param_file.yml
+        touch objects/${sample_id}_seurat_object.RDS
+        echo "${param_file}" > report/param_file.yml
         """
 }

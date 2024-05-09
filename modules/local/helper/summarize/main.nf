@@ -18,12 +18,12 @@ process HELPER_SUMMARIZE {
         task.ext.when == null || task.ext.when
 
     script:
-        def param_file = task.ext.args ? "-P input_metrics_report:\"${project_metrics.join(';')}\" -P ${task.ext.args}" : ""
+        def param_file = task.ext.args ? "-P input_metrics_report:\'${project_metrics.join(';')}\' -P ${task.ext.args}" : ""
         """
         quarto render ${notebook_summarize} ${param_file}
         """
     stub:
-        def param_file = task.ext.args ? "-P input_metrics_report:\"${project_metrics.join(';')}\" -P ${task.ext.args}" : ""
+        def param_file = task.ext.args ? "-P input_metrics_report:\'${project_metrics.join(';')}\' -P ${task.ext.args}" : ""
         """
 
         mkdir -p report

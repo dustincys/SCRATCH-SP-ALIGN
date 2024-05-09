@@ -9,9 +9,7 @@ include { SCRATCH_QC }    from './subworkflow/local/scratch_qc.nf'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-if (params.input_gex_matrices_path) { input_gex_matrices = file(params.input_gex_matrices_path) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
-if (params.input_exp_table) { input_exp_table = file(params.input_exp_table) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
-
+if (params.input_seurat_object) { input_seurat_object = file(params.input_seurat_object) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN ALL WORKFLOWS
@@ -24,25 +22,19 @@ workflow {
 
         Parameters:
 
-        Input: ${input_gex_matrices}
-        Metadata: ${input_exp_table}
+        Input: ${input_seurat_object}
 
     """
 
     // Description
-    ch_gex_matrices = Channel.fromPath(params.input_gex_matrices_path, checkIfExists: true)
-    ch_exp_table    = Channel.fromPath(params.input_exp_table, checkIfExists: true)
+    ch_seurat_object = Channel.fromPath(params.input_seurat_object, checkIfExists: true)
 
     // Filtering sample and cells
-    SCRATCH_QC(
-        ch_gex_matrices,
-        ch_exp_table
+    SCRATCH_CLUSTERING(
+        ch_seurat_object
     )
 
 }
-
-// workflow SCRATCH_QC_WORKFLOW {}
-// workflow SCRATCH_CLUSTERING_WORKFLOW {}
 
 workflow.onComplete {
     log.info(

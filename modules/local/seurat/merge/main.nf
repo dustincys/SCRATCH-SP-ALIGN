@@ -12,7 +12,7 @@ process SEURAT_MERGE {
         path(ch_page_config)
 
     output:
-        path("data/${params.project_name}_merged_object.RDS"), emit: project_rds
+        path("${params.project_name}_merged_object.RDS"), emit: project_rds
         path("report/${notebook_merge.baseName}.html")
 
     when:
@@ -28,7 +28,7 @@ process SEURAT_MERGE {
         """
         mkdir -p report data figures/merge
 
-        touch data/${params.project_name}_merged_object.RDS
+        touch ${params.project_name}_merged_object.RDS
         touch report/${notebook_merge.baseName}.html
 
         """
