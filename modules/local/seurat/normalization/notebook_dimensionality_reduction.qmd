@@ -24,7 +24,7 @@ lightbox:
     loop: true
 params:
   project_name: 'Test'
-  project_object: './data/Test_cell_annotation.RDS'
+  seurat_object: './data/Test_cell_annotation.RDS'
   thr_n_features: 2000
   thr_n_dimensions: 100
   n_threads: 8
@@ -39,7 +39,7 @@ params:
 
 # Project parameters 
 project_name <- params$project_name
-project_object <- params$project_object
+seurat_object <- params$seurat_object
 
 # Inputs and thresholds
 thr_n_features <- params$thr_n_features
@@ -52,7 +52,7 @@ n_threads <- params$n_threads
 n_memory <- params$n_memory
 
 # Output parameters
-work_directory <- params$workdir
+work_directory <- params$work_directory
 timestamp <- params$timestamp
 auto_save <- params$auto_save
 
@@ -97,7 +97,7 @@ for(sub_directory in c('data', 'figures')) {
 ```{r loading_rds}
 
 # Reading seurat object
-seurat_object <- readRDS(file = project_object)
+seurat_object <- readRDS(file = seurat_object)
 
 # Setting random seed
 random_seed <- 2203

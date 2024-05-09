@@ -22,7 +22,7 @@
                     "thr_n_dimensions": {
                         "type": "integer",
                         "default": 25,
-                        "title": "Number of dimensions"
+                        "title": "Number of PCA dimensions"
                     }
                 }
             },

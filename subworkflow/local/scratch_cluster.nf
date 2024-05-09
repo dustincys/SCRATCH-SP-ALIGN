@@ -2,7 +2,7 @@
 // Description
 //
 
-include { SEURAT_NORMALIZE          } from '../../modules/local/seurat/normilization/main.nf'
+include { SEURAT_NORMALIZE          } from '../../modules/local/seurat/normalization/main.nf'
 // include { SEURAT_CLUSTER            } from '../../modules/local/seurat/cluster/main.nf'
 
 // Importing Quarto notebooks
@@ -19,9 +19,20 @@ workflow SCRATCH_CLUSTERING {
 
     main:
 
+        // Importing notebook
+        ch_notebook_normalize   = Channel.fromPath(params.notebook_normalize, checkIfExists: true)
+
+        // Description
+        ch_template    = Channel.fromPath(params.template, checkIfExists: true)
+            .collect()
+
+        ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
+            .collect()
+
         SEURAT_NORMALIZE(
             ch_merge_object,
-            notebook_normalize
+            ch_notebook_normalize,
+            ch_page_config
         )
 
         // Performing clustering        
