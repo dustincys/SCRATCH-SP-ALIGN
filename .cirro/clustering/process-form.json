@@ -32,7 +32,7 @@
             "properties": {
                     "input_group_plot": {
                         "type": "string",
-                        "default": "sample_id;surface_marker",
+                        "default": "patient_id;timepoint",
                         "title": "Meta-data columns for UMAP plot"
                     },
                     "thr_resolution": {
