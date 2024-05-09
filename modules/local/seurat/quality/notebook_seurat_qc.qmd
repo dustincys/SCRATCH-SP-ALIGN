@@ -10,10 +10,10 @@ format:
     toc: true
     toc-location: right
     toc-depth: 2
+    embed-resources: true
     code-fold: show
     code-tools: true
     df-print: paged
-    default-image-extension: svg
     fig-align: center
 lightbox:
     match: auto
@@ -90,6 +90,7 @@ library(Seurat)
 ## Folder structure
 
 ```{r outdir}
+#| output: false
 
 if(!dir.exists(work_directory)) {
   dir.create(work_directory, recursive = T)
@@ -102,8 +103,6 @@ for(sub_directory in c('figures', 'objects', 'log')) {
 ```
 
 ## Sample-level Quality-Control
-
-------------------------------------------------------------------------
 
 ```{r sample_level}
 
@@ -170,7 +169,7 @@ if(all(check_list)) {
 
 ```
 
-::: {.alert .alert-warning}
+:::{.callout-important}
 This sample has been flag as <strong>`r status_flag`</strong>
 :::
 
@@ -179,8 +178,6 @@ This sample has been flag as <strong>`r status_flag`</strong>
 The Cellranger report can be found, [here](outs/web_summary.html).
 
 ## Cell-level Quality-Control
-
-------------------------------------------------------------------------
 
 ```{r seurat_object}
 
@@ -304,11 +301,9 @@ if(auto_save) {
 
 ```
 
-::: {.alert .alert-warning}
+:::{.callout-important}
 The number of observed high-quality cells is equal to `r n_observed_cells`. This sample has been flag as <strong>`r status_flag`</strong>
 :::
-
-------------------------------------------------------------------------
 
 ## Parameters log
 

@@ -3,7 +3,7 @@ process SEURAT_QUALITY {
     tag "Assessing quality ${sample_id}"
     label 'process_medium'
 
-    container "oandrefonseca/scratch-annotation:main" // to change
+    container "oandrefonseca/scratch-qc:main"
 
     input:
         tuple val(sample_id), path(csv_metrics), path(matrices)
@@ -13,8 +13,7 @@ process SEURAT_QUALITY {
     output:
         tuple val(sample_id), path("objects/*"), path("log/*.txt"), emit: status
         path("${sample_id}_metrics_upgrade.csv"),                   emit: metrics
-        path("notebook_${sample_id}.html")
-        path("figures")
+        path("report/notebook_${sample_id}.html")
 
     when:
         task.ext.when == null || task.ext.when
