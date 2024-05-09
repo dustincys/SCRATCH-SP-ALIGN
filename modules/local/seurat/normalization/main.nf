@@ -1,4 +1,5 @@
 process SEURAT_NORMALIZE {
+
     tag "Running normalization and dimensionality reduction"
     label 'process_high'
 
@@ -12,6 +13,7 @@ process SEURAT_NORMALIZE {
     output:
         path("data/${params.project_name}_reduction_object.RDS"), emit: project_rds
         path("report/${notebook_normalize.baseName}.html")
+        path("_freeze/**/figure-html/*.png"), emit: figures
 
     when:
         task.ext.when == null || task.ext.when
@@ -23,7 +25,10 @@ process SEURAT_NORMALIZE {
         """
     stub:
         """
-        mkdir -p report data figures/reduction
+        mkdir -p report data figures 
+        mkdir -p _freeze/DUMMY/figure-html
+        
+        touch _freeze/DUMMY/figure-html/FILE.png
 
         touch data/${params.project_name}_reduction_object.RDS
         touch report/${notebook_normalize.baseName}.html

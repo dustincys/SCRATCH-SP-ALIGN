@@ -29,11 +29,15 @@ workflow SCRATCH_CLUSTERING {
         ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
             .collect()
 
+        // Normalizing dataset
         SEURAT_NORMALIZE(
             ch_merge_object,
             ch_notebook_normalize,
             ch_page_config
         )
+
+        SEURAT_NORMALIZE.out.figures
+            .view()
 
         // Performing clustering        
         // SEURAT_CLUSTER(          
