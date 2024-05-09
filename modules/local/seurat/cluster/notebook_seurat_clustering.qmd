@@ -10,10 +10,10 @@ format:
     toc: true
     toc-location: right
     toc-depth: 2
+    embed-resources: true
     code-fold: show
     code-tools: true
     df-print: paged
-    default-image-extension: svg
     fig-align: center
 lightbox:
     match: auto
@@ -39,6 +39,7 @@ params:
 # Project Name: `r params$project_name`
 
 ```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = FALSE}
+#| include: false
 
 # Project parameters 
 project_name <- params$project_name
@@ -66,7 +67,7 @@ work_directory <- params$workdir
 timestamp <- params$timestamp
 auto_save <- params$auto_save
 
-# Rmarkdown options
+# Knitr options
 knitr::opts_knit$set(
   root.dir = work_directory
   )
@@ -76,6 +77,7 @@ knitr::opts_knit$set(
 ## Loading library
 
 ```{r library}
+#| include: false
 
 library(readr)
 library(dplyr)
@@ -94,12 +96,9 @@ if(!dir.exists(work_directory)) {
   dir.create(work_directory, recursive = T)
 }
 
-for(sub_directory in c('data', 'figures', 'figures/clustering')) {
+for(sub_directory in c('data', 'figures')) {
   dir.create(paste0(work_directory, '/', sub_directory))
 }
-
-# Cirro-related edition
-file.create('figures/clustering/.empty')
 
 ```
 

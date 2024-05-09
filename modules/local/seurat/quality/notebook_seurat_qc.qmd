@@ -105,6 +105,7 @@ for(sub_directory in c('figures', 'objects', 'log')) {
 ## Sample-level Quality-Control
 
 ```{r sample_level}
+#| echo: false
 
 sample_metrics <- read_csv(file = csv_metrics)
 
@@ -172,10 +173,6 @@ if(all(check_list)) {
 :::{.callout-important}
 This sample has been flag as <strong>`r status_flag`</strong>
 :::
-
-### Third-party report
-
-The Cellranger report can be found, [here](outs/web_summary.html).
 
 ## Cell-level Quality-Control
 
@@ -262,7 +259,6 @@ write_lines(status_flag, file = paste0('log/', sub('\\w+:', '', status_flag), '.
 ```
 
 ```{r compile_csv}
-
 
 sample_metrics_upgrade <- sample_metrics %>%
   select(`Estimated Number of Cells`, `Mean Reads per Cell`, `Median Genes per Cell`, `Median UMI Counts per Cell`, `Sequencing Saturation`) %>%

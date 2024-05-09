@@ -9,7 +9,7 @@ include { SCRATCH_QC }    from './subworkflow/local/scratch_qc.nf'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-if (params.input_seurat_object) { input_seurat_object = file(params.input_seurat_object) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
+if (params.input_merged_object) { input_merged_object = file(params.input_merged_object) } else { exit 1, 'Please, provide a --input <PATH/TO/seurat_object.RDS> !' }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN ALL WORKFLOWS
@@ -22,12 +22,12 @@ workflow {
 
         Parameters:
 
-        Input: ${input_seurat_object}
+        Input: ${input_merged_object}
 
     """
 
     // Description
-    ch_seurat_object = Channel.fromPath(params.input_seurat_object, checkIfExists: true)
+    ch_seurat_object = Channel.fromPath(input_merged_object, checkIfExists: true)
 
     // Filtering sample and cells
     SCRATCH_CLUSTERING(

@@ -19,12 +19,12 @@ process SEURAT_MERGE {
         task.ext.when == null || task.ext.when
         
     script:
-        def param_file = task.ext.args ? "-P input_qc_approved:\"${ch_qc_approved.join(';')}\" -P input_exp_table:${ch_exp_table} -P ${task.ext.args}" : ""
+        def param_file = task.ext.args ? "-P input_qc_approved:\'${ch_qc_approved.join(';')}\' -P input_exp_table:${ch_exp_table} -P ${task.ext.args}" : ""
         """
         quarto render ${notebook_merge} ${param_file}
         """
     stub:
-        def param_file = task.ext.args ? "-P input_qc_approved:\"${ch_qc_approved.join(';')}\" -P input_exp_table:${ch_exp_table} -P ${task.ext.args}" : ""
+        def param_file = task.ext.args ? "-P input_qc_approved:\'${ch_qc_approved.join(';')}\' -P input_exp_table:${ch_exp_table} -P ${task.ext.args}" : ""
         """
         mkdir -p report data figures/merge
 

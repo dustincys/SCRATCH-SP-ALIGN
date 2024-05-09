@@ -1,80 +1,9 @@
 {
     "ui": {},
     "form": {
-        "title": "SCRATCH Align",
+        "title": "SCRATCH Clustering",
         "type": "object",
         "properties": {
-            "pipeline_parameters": {
-            "title": "Pipeline parameters",
-            "type": "object",
-            "properties": {
-                    "organism": {
-                        "type": "string",
-                        "title": "Organism",
-                        "default": "Human",
-                        "enum": [
-                            "Human",
-                            "Mouse"
-                        ]
-                    },
-                    "modality": {
-                        "type": "string",
-                        "title": "Sequencing modality",
-                        "default": "GEX",
-                        "enum": [
-                            "GEX",
-                            "TCR",
-                            "GEX+TCR"
-                        ]
-                    }
-                }
-            },
-            "quality_control_parameters": {
-            "title": "Quality Control parameters",
-            "type": "object",
-            "properties": {
-                    "thr_estimate_n_cells": {
-                        "type": "integer",
-                        "default": 300,
-                        "title": "Estimated number of cells"
-                    },
-                    "thr_mean_reads_per_cells": {
-                        "type": "integer",
-                        "default": 25000,
-                        "title": "Mean reads per cell"
-                    },
-                    "thr_median_genes_per_cell": {
-                        "type": "integer",
-                        "default": 900,
-                        "title": "Median genes per cell"
-                    },
-                    "thr_median_umi_per_cell": {
-                        "type": "integer",
-                        "default": 1000,
-                        "title": "Median UMI per cell"
-                    },
-                    "thr_n_feature_rna_min": {
-                        "type": "integer",
-                        "default": 300,
-                        "title": "Minimum features per cell"
-                    },
-                    "thr_n_feature_rna_max": {
-                        "type": "integer",
-                        "default": 7500,
-                        "title": "Maximum features per cell"
-                    },
-                    "thr_percent_mito": {
-                        "type": "integer",
-                        "default": 25,
-                        "title": "Percentage of mitochondrial genes"
-                    },
-                    "thr_n_observed_cells": {
-                        "type": "integer",
-                        "default": 300,
-                        "title": "Number of observed cells"
-                    }
-                }
-            },
             "normalization_parameters": {
             "title": "Normalization parameters",
             "type": "object",

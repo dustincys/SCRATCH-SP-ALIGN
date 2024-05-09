@@ -2,8 +2,8 @@
 // Description
 //
 
-// include { SEURAT_CLUSTER            } from '../../modules/local/seurat/cluster/main.nf'
-// include { SEURAT_NORMALIZE          } from '../../modules/local/seurat/cluster/main.nf'
+include { SEURAT_NORMALIZE          } from '../../modules/local/seurat/normilization/main.nf'
+include { SEURAT_CLUSTER            } from '../../modules/local/seurat/cluster/main.nf'
 
 // Importing Quarto notebooks
 normalize_script = "${workflow.projectDir}/modules/local/seurat/normalize/notebook_seurat_normalize.qmd"
@@ -16,13 +16,18 @@ workflow SCRATCH_CLUSTERING {
 
     main:
 
-        // Performing clustering        
-        SEURAT_CLUSTER(          
+        SEURAT_NORMALIZE(
             ch_merge_object,
-            SEURAT_MERGE.out.dummy,
-            cluster_script,
-            input_cluster_step
+            notebook_normalize
         )
+
+        // Performing clustering        
+        // SEURAT_CLUSTER(          
+        //     ch_merge_object,
+        //     SEURAT_MERGE.out.dummy,
+        //     cluster_script,
+        //     input_cluster_step
+        // )
 
         ch_cluster = SEURAT_CLUSTER.out.project_rds
 

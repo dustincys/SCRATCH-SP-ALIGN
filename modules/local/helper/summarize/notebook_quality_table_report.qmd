@@ -88,7 +88,6 @@ for (sample_metric in input_metrics_report) {
 ```
 
 ```{r}
-#| code-fold: true
 #| column: screen-inset-shaded
 
 DT::datatable(metric_report_db, 
@@ -103,6 +102,7 @@ DT::datatable(metric_report_db,
 ## Parameters log
 
 ```{r params_log, message = FALSE, warning = FALSE, echo = TRUE}
+#| code-fold: true
 
 print(
   list(
@@ -118,6 +118,7 @@ print(
 ## Session info
 
 ```{r session_info, message = FALSE, warning = FALSE, echo = TRUE}
+#| code-fold: true
 
 sessionInfo()
 
