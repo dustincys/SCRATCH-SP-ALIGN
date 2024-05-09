@@ -1,27 +1,38 @@
-process SEURAT_CLUSTERING {
-    tag "${sample}"
+process SEURAT_CLUSTER {
+
+    tag "Clustering cells"
     label 'process_high'
 
-    container "nfcore/cellranger:7.1.0"
-    publishDir "${params.outdir}/${params.project_name}/data/sample", mode: 'copy'
+    container "oandrefonseca/scratch-qc:main"
 
     input:
-        tuple val(sample), path(reads)
-        path  reference
+        path(seurat_object)
+        path(notebook_clustering)
+        path(page_config)
 
     output:
-        tuple val(sample), path("${sample}/outs/*"), emit: outs
-        path("versions.yml")                       , emit: versions
+        path("data/${params.project_name}_cluster_object.RDS"), emit: seurat_rds
+        path("report/${notebook_clustering.baseName}.html")
+        path("_freeze/**/figure-html/*.png"), emit: figures
 
     when:
         task.ext.when == null || task.ext.when
-
+        
     script:
-        def args = task.ext.args ?: ''
+        def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P ${task.ext.args}" : ""
         """
+        quarto render ${notebook_clustering} ${param_file}
         """
-
     stub:
         """
+        mkdir -p report data figures 
+        mkdir -p _freeze/DUMMY/figure-html
+        
+        touch _freeze/DUMMY/figure-html/FILE.png
+
+        touch data/${params.project_name}_cluster_object.RDS
+        touch report/${notebook_clustering.baseName}.html
+
         """
+
 }

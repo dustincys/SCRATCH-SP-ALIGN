@@ -11,7 +11,7 @@ process SEURAT_NORMALIZE {
         path(page_config)
 
     output:
-        path("data/${params.project_name}_reduction_object.RDS"), emit: project_rds
+        path("data/${params.project_name}_reduction_object.RDS"), emit: seurat_rds
         path("report/${notebook_normalize.baseName}.html")
         path("_freeze/**/figure-html/*.png"), emit: figures
 
