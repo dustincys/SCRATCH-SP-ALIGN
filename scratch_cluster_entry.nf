@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl = 2
 
-include { SCRATCH_QC }    from './subworkflow/local/scratch_qc.nf'
+include { SCRATCH_CLUSTERING }    from './subworkflow/local/scratch_cluster.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
