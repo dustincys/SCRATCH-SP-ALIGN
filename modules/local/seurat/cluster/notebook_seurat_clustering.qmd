@@ -35,8 +35,6 @@ params:
   auto_save: TRUE
 ---
 
-# Project Name: `r params$project_name`
-
 ```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = FALSE}
 #| include: false
 
@@ -75,14 +73,14 @@ knitr::opts_knit$set(
 ## Loading library
 
 ```{r library}
-#| include: false
+#| echo: false
 
 library(readr)
 library(dplyr)
 library(ggplot2)
 library(patchwork)
 library(Seurat)
-# library(ROGUE)
+library(ROGUE)
 
 ```
 
@@ -297,29 +295,23 @@ expression_counts <- GetAssayData(seurat_object, layer = "counts")
 expression_counts <- expression_counts[, sample_clusters_members$barcode] %>%
   as.matrix()
 
-# expression_counts <- matr.filter(expression_counts, min.cells = 10, min.genes = 10)
+expression_counts <- matr.filter(expression_counts, min.cells = 10, min.genes = 10)
 
-# # Computing entropy background
-# entropy_result <- SE_fun(expression_counts)
+# Computing entropy background
+entropy_result <- SE_fun(expression_counts)
 
-# # Avg. ROGUE score across clusters
-# rogue_value <- CalculateRogue(entropy_result, platform = "UMI")
+# Avg. ROGUE score across clusters
+rogue_value <- CalculateRogue(entropy_result, platform = "UMI")
 
-# # Calculating ROGUE score
-# rogue_result <- rogue(expression_counts, 
-#                       labels = sample_clusters_members$clusters,
-#                       samples = sample_clusters_members$Patient,
-#                       platform = "UMI",
-#                       span = 0.6)
+# Calculating ROGUE score
+rogue_result <- rogue(expression_counts, 
+                      labels = sample_clusters_members$clusters,
+                      samples = sample_clusters_members$Patient,
+                      platform = "UMI",
+                      span = 0.6
+                      )
 
-# rogue_result
-
-```
-
-```{r}
-
-# TEST
-rogue_value <- 0
+rogue_result
 
 ```
 
@@ -335,7 +327,7 @@ The ROGUE score for the clustering composition (resolution = **`r thr_resolution
 #| fig-cap-location: top
 
 # Highly variable genes
-# SEplot(entropy_result)
+SEplot(entropy_result)
 
 ```
 
@@ -350,11 +342,11 @@ The @fig-se-plot Description
 #| fig-cap: 'UMAP'
 #| fig-cap-location: top
 
-# rogue.boxplot(rogue_result) +
-#   scale_x_discrete(limits = sort(unique(seurat_object@meta.data$seurat_clusters))) +
-#   theme(
-#     axis.text = element_text(size = 16)
-#   )
+rogue.boxplot(rogue_result) +
+  scale_x_discrete(limits = sort(unique(seurat_object@meta.data$seurat_clusters))) +
+  theme(
+    axis.text = element_text(size = 16)
+  )
 
 ```
 
@@ -398,15 +390,15 @@ The @fig-umap-sample Description
 #| fig-height: 10
 #| fig-align: center
 
-# SCP::CellDimPlot(
-#   srt = seurat_object, 
-#   group.by = "batch",
-#   reduction = "umap",
-#   label = TRUE, 
-#   label_repel = TRUE,
-#   show_stat = TRUE,
-#   theme_use = "theme_blank"
-# )
+SCP::CellDimPlot(
+  srt = seurat_object, 
+  group.by = "batch",
+  reduction = "umap",
+  label = TRUE, 
+  label_repel = TRUE,
+  show_stat = TRUE,
+  theme_use = "theme_blank"
+)
 
 ```
 

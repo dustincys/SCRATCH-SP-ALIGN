@@ -41,9 +41,6 @@ workflow {
 
 }
 
-// workflow SCRATCH_QC_WORKFLOW {}
-// workflow SCRATCH_CLUSTERING_WORKFLOW {}
-
 workflow.onComplete {
     log.info(
         workflow.success ? "\nDone! Open the following report in your browser -> ${launchDir}/report/index.html\n" :

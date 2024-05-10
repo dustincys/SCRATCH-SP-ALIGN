@@ -20,13 +20,16 @@ if (params.samplesheet) { samplesheet = file(params.samplesheet) } else { exit 1
 
 workflow {
 
-    // Description
-    ch_samplesheet = Channel.fromPath(samplesheet, checkIfExists: true)
+    log.info """\
+
+        Parameters:
+
+        Input: ${samplesheet}
+
+    """
 
     // Description
-    ch_template    = Channel.fromPath(params.template, checkIfExists: true)
-    ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
-        .collect()
+    ch_samplesheet = Channel.fromPath(samplesheet, checkIfExists: true)
 
     // GEX+VDJ alignment
     SCRATCH_ALIGN(

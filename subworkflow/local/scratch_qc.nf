@@ -27,12 +27,16 @@ workflow SCRATCH_QC {
         ch_notebook_doubletfinder = Channel.fromPath(params.notebook_doubletfinder, checkIfExists: true)
         ch_notebook_scdblfinder   = Channel.fromPath(params.notebook_scdblfinder, checkIfExists: true)
 
-        // Description
+        // Quarto settings
         ch_template    = Channel.fromPath(params.template, checkIfExists: true)
             .collect()
 
         ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
             .collect()
+
+        ch_page_config = ch_template
+            .map{ file -> file.find { it.toString().endsWith('.png') } }
+            .combine(ch_page_config)
 
         // Grouping cellranger outputs
         ch_cell_matrices = ch_gex_matrices

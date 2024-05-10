@@ -21,7 +21,7 @@ workflow SCRATCH_CLUSTERING {
         ch_notebook_normalize  = Channel.fromPath(params.notebook_normalize, checkIfExists: true)
         ch_notebook_clustering = Channel.fromPath(params.notebook_clustering, checkIfExists: true)
 
-        // Description
+        // Quarto settings
         ch_template    = Channel.fromPath(params.template, checkIfExists: true)
             .collect()
 

@@ -20,6 +20,17 @@ workflow SCRATCH_ALIGN {
         // Channel definitions
         ch_versions  = Channel.empty()
 
+        // Quarto settings
+        ch_template    = Channel.fromPath(params.template, checkIfExists: true)
+            .collect()
+
+        ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
+            .collect()
+
+        ch_page_config = ch_template
+            .map{ file -> file.find { it.toString().endsWith('.png') } }
+            .combine(ch_page_config)
+
         // Sample check
         ch_sample_table = SAMPLESHEET_CHECK(ch_sample_table)
             .csv
