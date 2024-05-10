@@ -20,7 +20,7 @@ process CELLBENDER {
         def cellbender_output = "cellbender_${sample_id}_matrix.h5"
         """
         cellbender remove-background \
-            --input ${matrix_h5ad} \
+            --input ${matrices} \
             --output ${cellbender_output} \
             ${args}
         """
