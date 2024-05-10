@@ -3,7 +3,7 @@ process SEURAT_MERGE {
     tag "Merging post-QC samples"
     label 'process_high'
 
-    container "oandrefonseca/scratch-cluster:main"
+    container "oandrefonseca/scratch-qc:main"
 
     input:
         path(ch_qc_approved)
@@ -12,7 +12,7 @@ process SEURAT_MERGE {
         path(ch_page_config)
 
     output:
-        path("data/${params.project_name}_merged_object.RDS"), emit: project_rds
+        path("data/${params.project_name}_merged_object.RDS"), emit: seurat_rds
         path("report/${notebook_merge.baseName}.html")
 
     when:
@@ -28,7 +28,7 @@ process SEURAT_MERGE {
         """
         mkdir -p report data figures/merge
 
-        touch ${params.project_name}_merged_object.RDS
+        touch data/${params.project_name}_merged_object.RDS
         touch report/${notebook_merge.baseName}.html
 
         """

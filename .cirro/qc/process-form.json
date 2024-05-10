@@ -50,18 +50,34 @@
                     }
                 }
             },
-            "doublets_parameters": {
-            "title": "Doublets algorithms",
-            "type": "object",
-            "properties": {
-                "skip_doubletfinder": {
-                    "type": "boolean",
-                    "title": "Skipping DoubletFinder annotation"
+            "cellbender_parameters": {
+                "title": "Cellbender",
+                "type": "object",
+                "properties": {
+                    "expected_cells": {
+                        "type": "integer",
+                        "default": 500,
+                        "title": "Number of expected cells"
+                        },
+                    "total_droplets": {
+                        "type": "integer",
+                        "default": 2000,
+                        "title": "Number of observed cells"
                     },
-                "skip_scdblfinder": {
-                    "type": "boolean",
-                    "title": "Skipping scDblFinder annotation"
-                }    
+                    "skip_cellbender": {
+                        "type": "boolean",
+                        "title": "Skipping Cellbender annotation"
+                    }    
+                }
+            },
+            "doublets_parameters": {
+                "title": "Doublets algorithms",
+                "type": "object",
+                "properties": {
+                    "skip_scdblfinder": {
+                        "type": "boolean",
+                        "title": "Skipping scDblFinder annotation"
+                    }    
                 }
             }
         }

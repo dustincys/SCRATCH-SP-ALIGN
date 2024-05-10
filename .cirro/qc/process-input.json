@@ -14,5 +14,4 @@
     "thr_n_observed_cells": "$.params.dataset.paramJson.quality_control_parameters.thr_n_observed_cells",   
     "skip_doubletfinder": "$.params.dataset.paramJson.doublets_parameters.skip_doubletfinder",
     "skip_scdblfinder": "$.params.dataset.paramJson.doublets_parameters.skip_scdblfinder"
-
 }

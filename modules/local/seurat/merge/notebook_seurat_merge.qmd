@@ -91,6 +91,7 @@ for(sub_directory in c('data', 'figures')) {
 ## Loading metadata
 
 ```{r}
+#| warning: false
 
 metadata <- readr::read_csv(file = input_exp_table)
 metadata <- metadata %>%
@@ -132,7 +133,7 @@ seurat_object <- purrr::reduce(
 
 ## Unifying sample layers
 
-```{r seurat_rejoin, message = FALSE, warning = FALSE, echo = FALSE}
+```{r seurat_rejoin}
 #| code-fold: true
 
 seurat_object <- JoinLayers(seurat_object)

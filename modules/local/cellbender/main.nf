@@ -1,28 +1,34 @@
 
 process CELLBENDER {
 
-    tag "Running Cellbender on ${sample}"
+    tag "Running Cellbender on ${sample_id}"
     label 'process_high'
 
     container "us.gcr.io/broad-dsde-methods/cellbender:0.3.0"
 
     input:
-        path(matrix_h5ad)
+        tuple val(sample_id), path(csv_metrics), path(matrices)
 
     output:
-        path(filtered_h5file)
+        tuple val(sample_id), path(csv_metrics), path("cellbender_${sample_id}_matrix.h5")
 
     when:
         task.ext.when == null || task.ext.when
 
     script:
-        def args = task.ext.args ? : ''
+        def args = task.ext.args ? task.ext.args : ''
+        def cellbender_output = "cellbender_${sample_id}_matrix.h5"
         """
         cellbender remove-background \
             --input ${matrix_h5ad} \
-            --output ${filtered_h5file} \
-            --expected-cells ${expected_cells} \
-            --total-droplets-included ${total_droplets}
+            --output ${cellbender_output} \
+            ${args}
+        """
+    stub:
+        def args = task.ext.args ? task.ext.args : ''
+        def cellbender_output = "cellbender_${sample_id}_matrix.h5"
+        """
+        touch ${cellbender_output}
         """
 
 }

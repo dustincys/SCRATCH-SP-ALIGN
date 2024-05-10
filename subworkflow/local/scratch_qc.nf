@@ -3,11 +3,10 @@
 //
 
 include { SEURAT_QUALITY            } from '../../modules/local/seurat/quality/main.nf'
+include { CELLBENDER                } from '../../modules/local/cellbender/main.nf'
 include { HELPER_SUMMARIZE          } from '../../modules/local/helper/summarize/main.nf'
 include { SEURAT_MERGE              } from '../../modules/local/seurat/merge/main.nf'
-
-// include { DOUBLETFINDER             } from '../../modules/local/doubletfinder/main.nf'
-// include { SCDBLFINDER               } from '../../modules/local/doubletfinder/main.nf'
+include { SCDBLFINDER               } from '../../modules/local/scdblfinder/main.nf'
 
 workflow SCRATCH_QC {
 
@@ -24,7 +23,6 @@ workflow SCRATCH_QC {
         ch_notebook_quality       = Channel.fromPath(params.notebook_quality, checkIfExists: true)
         ch_notebook_summarize     = Channel.fromPath(params.notebook_summarize, checkIfExists: true)
         ch_notebook_merge         = Channel.fromPath(params.notebook_merge, checkIfExists: true)
-        ch_notebook_doubletfinder = Channel.fromPath(params.notebook_doubletfinder, checkIfExists: true)
         ch_notebook_scdblfinder   = Channel.fromPath(params.notebook_scdblfinder, checkIfExists: true)
 
         // Quarto settings
@@ -37,6 +35,7 @@ workflow SCRATCH_QC {
         ch_page_config = ch_template
             .map{ file -> file.find { it.toString().endsWith('.png') } }
             .combine(ch_page_config)
+            .collect()
 
         // Grouping cellranger outputs
         ch_cell_matrices = ch_gex_matrices
@@ -59,6 +58,16 @@ workflow SCRATCH_QC {
         ch_cell_matrices
             .view()
 
+        // Removing RNA ambient and artifacts
+        if(params.skip_cellbender) {
+
+            ch_cell_matrices = CELLBENDER(
+                ch_cell_matrices
+            )
+
+        }
+
+        // Standard filtering
         SEURAT_QUALITY(
             ch_cell_matrices,
             ch_notebook_quality.collect(),
@@ -69,9 +78,6 @@ workflow SCRATCH_QC {
         ch_quality_report = SEURAT_QUALITY.out.metrics
             .collect()
         
-        ch_quality_report
-            .view()
-
         // Generating QC table
         HELPER_SUMMARIZE(
             ch_quality_report,
@@ -86,13 +92,10 @@ workflow SCRATCH_QC {
             .collect()
 
         ch_qc_approved
-            .view()
-
-        ch_qc_approved
             .ifEmpty{error 'No samples matched QC expectations.'}
             .view{'Done'}
 
-        // // Merging all Seurat objects into a single-object
+        // Merging all Seurat objects into a single-object
         SEURAT_MERGE(
             ch_qc_approved,
             ch_notebook_merge,
@@ -100,8 +103,17 @@ workflow SCRATCH_QC {
             ch_page_config
         )
 
-        ch_merge_object = SEURAT_MERGE.out.project_rds
+        ch_merge_object = SEURAT_MERGE.out.seurat_rds
+        
+        // Filtering doublets
+        SCDBLFINDER(
+            ch_merge_object,
+            ch_notebook_scdblfinder,
+            ch_page_config
+        )
+
+        ch_final_object = SCDBLFINDER.out.seurat_rds
 
     emit:
-        ch_merge_object
+        ch_final_object
 }
