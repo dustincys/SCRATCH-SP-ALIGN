@@ -24,7 +24,7 @@ lightbox:
     loop: true
 params:
   project_name: 'Test'
-  seurat_object: './data/Test_cell_annotation.RDS'
+  seurat_object: './data/Project_merged_object.RDS'
   thr_n_features: 2000
   thr_n_dimensions: 100
   n_threads: 8
@@ -32,8 +32,6 @@ params:
   work_directory: !expr here::here()
   auto_save: TRUE
 ---
-
-# Project Name: `r params$project_name`
 
 ```{r setup, include = FALSE, message = FALSE, warning = FALSE, echo = FALSE}
 
@@ -200,8 +198,6 @@ if(auto_save) {
 }
 
 ```
-
-
 
 ## Parameters log
 
