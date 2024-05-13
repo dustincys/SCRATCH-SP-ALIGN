@@ -115,6 +115,7 @@ sample_label <- setNames(
 
 # Reading approved samples
 seurat_object_list <- list()
+
 for (label in names(sample_label)) {
   
   seurat_object_list[[label]] <- readRDS(file = sample_label[[label]])
@@ -136,7 +137,11 @@ seurat_object <- purrr::reduce(
 ```{r seurat_rejoin}
 #| code-fold: true
 
-seurat_object <- JoinLayers(seurat_object)
+if(length(seurat_object) > 1) {
+  
+  seurat_object <- JoinLayers(seurat_object)  
+
+}
 
 ```
 

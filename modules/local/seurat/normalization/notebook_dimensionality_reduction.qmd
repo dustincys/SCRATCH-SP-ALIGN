@@ -24,7 +24,7 @@ lightbox:
     loop: true
 params:
   project_name: 'Test'
-  seurat_object: './data/Project_merged_object.RDS'
+  seurat_object: './data/project_qc_merged_object.RDS'
   thr_n_features: 2000
   thr_n_dimensions: 100
   n_threads: 8
@@ -100,6 +100,19 @@ seurat_object <- readRDS(file = seurat_object)
 # Setting random seed
 random_seed <- 2203
 set.seed(random_seed)
+
+```
+
+## Unifying sample layers
+
+```{r seurat_rejoin}
+#| code-fold: true
+
+if(length(seurat_object) > 1) {
+  
+  seurat_object <- JoinLayers(seurat_object)  
+
+}
 
 ```
 
