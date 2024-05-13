@@ -11,7 +11,10 @@
     "thr_n_feature_rna_min": "$.params.dataset.paramJson.quality_control_parameters.thr_n_feature_rna_min",
     "thr_n_feature_rna_max": "$.params.dataset.paramJson.quality_control_parameters.thr_n_feature_rna_max",
     "thr_percent_mito": "$.params.dataset.paramJson.quality_control_parameters.thr_percent_mito",
-    "thr_n_observed_cells": "$.params.dataset.paramJson.quality_control_parameters.thr_n_observed_cells",   
-    "skip_doubletfinder": "$.params.dataset.paramJson.doublets_parameters.skip_doubletfinder",
+    "expected_cells": "$.params.dataset.paramJson.cellbender_parameters.expected_cells",
+    "total_droplets": "$.params.dataset.paramJson.cellbender_parameters.total_droplets",   
+    "fpr": "$.params.dataset.paramJson.cellbender_parameters.fpr",   
+    "epochs": "$.params.dataset.paramJson.cellbender_parameters.epochs",
+    "skip_cellbender": "$.params.dataset.paramJson.cellbender_parameters.skip_cellbender",
     "skip_scdblfinder": "$.params.dataset.paramJson.doublets_parameters.skip_scdblfinder"
 }
