@@ -48,9 +48,9 @@ workflow SCRATCH_CLUSTERING {
             ch_page_config
         )
 
-        // ch_cluster = SEURAT_CLUSTER.out.project_rds
+        ch_cluster = SEURAT_CLUSTER.out.seurat_rds
 
     emit:
-        ch_versions
+        ch_cluster
 }
 
