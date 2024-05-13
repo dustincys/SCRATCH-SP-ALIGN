@@ -77,7 +77,8 @@
                     "skip_cellbender": {
                         "type": "boolean",
                         "default": true,
-                        "title": "Skipping Cellbender annotation"
+                        "title": "Skipping Cellbender annotation",
+                        "readOnly": true
                     }
                 }
             },
