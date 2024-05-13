@@ -30,6 +30,7 @@ workflow SCRATCH_ALIGN {
         ch_page_config = ch_template
             .map{ file -> file.find { it.toString().endsWith('.png') } }
             .combine(ch_page_config)
+            .collect()
 
         // Sample check
         ch_sample_table = SAMPLESHEET_CHECK(ch_sample_table)

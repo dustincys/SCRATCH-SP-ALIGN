@@ -28,7 +28,7 @@ process SEURAT_MERGE {
         """
         mkdir -p report data figures/merge
 
-        touch data/${params.project_name}_merged_object.RDS
+        touch data/${params.project_name}_qc_merged_object.RDS
         touch report/${notebook_merge.baseName}.html
 
         """

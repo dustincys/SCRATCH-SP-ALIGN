@@ -30,7 +30,9 @@ process SCDBLFINDER {
         
         touch _freeze/DUMMY/figure-html/FILE.png
 
-        touch data/${params.project_name}_final_qc_object.RDS
+        touch data/${params.project_name}_qc_sample_object.RDS
+        touch data/${params.project_name}_qc_cluster_object.RDS
+
         touch report/${notebook_scdblfinder.baseName}.html
 
         """

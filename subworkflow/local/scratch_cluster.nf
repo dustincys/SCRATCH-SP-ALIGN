@@ -31,6 +31,10 @@ workflow SCRATCH_CLUSTERING {
         ch_page_config = ch_template
             .map{ file -> file.find { it.toString().endsWith('.png') } }
             .combine(ch_page_config)
+            .collect()
+
+        ch_page_config
+            .view()
 
         // Normalizing dataset
         SEURAT_NORMALIZE(

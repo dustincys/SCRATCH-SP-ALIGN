@@ -2,7 +2,6 @@
 nextflow.enable.dsl = 2
 
 include { SCRATCH_ALIGN } from './subworkflow/local/scratch_align.nf'
-// include { SCRATCH_QC }    from './subworkflow/local/scratch_qc.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
