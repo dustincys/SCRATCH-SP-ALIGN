@@ -62,7 +62,7 @@
                     "total_droplets": {
                         "type": "integer",
                         "default": 1000,
-                        "title": "Number of observed cells"
+                        "title": "Total droplets"
                     },
                     "fpr": {
                         "type": "number",
