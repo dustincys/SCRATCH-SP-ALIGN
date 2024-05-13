@@ -59,7 +59,7 @@ workflow SCRATCH_QC {
             .view()
 
         // Removing RNA ambient and artifacts
-        if(params.skip_cellbender) {
+        if(!params.skip_cellbender) {
 
             ch_cell_matrices = CELLBENDER(
                 ch_cell_matrices
