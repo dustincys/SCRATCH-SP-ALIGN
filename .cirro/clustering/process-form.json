@@ -4,6 +4,19 @@
         "title": "SCRATCH Clustering",
         "type": "object",
         "properties": {
+            "pipeline_parameters": {
+                "title": "Pipeline parameters",
+                "type": "object",
+                "properties": {
+                    "seurat_object": {
+                        "type": "string",
+                        "title": "Seurat RDS",
+                        "file": "**/*_qc_*_object.RDS",
+                        "pathType": "dataset",
+                        "description": "Select the object for clustering"
+                    }
+                }
+            },
             "normalization_parameters": {
             "title": "Normalization parameters",
             "type": "object",

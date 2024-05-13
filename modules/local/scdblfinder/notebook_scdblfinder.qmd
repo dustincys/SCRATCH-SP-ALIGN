@@ -198,6 +198,8 @@ datatable(seurat_object@meta.data,
 ## Doublet composition
 
 ```{r}
+#| label: fig-doublet-composition
+#| fig-cap: 'Barplot'
 #| column: screen-inset-shaded
 #| layout-nrow: 1
 
@@ -225,9 +227,14 @@ SCP::CellStatPlot(
 
 ```{r}
 
-seurat_object <- subset(
+seurat_sample_object <- subset(
   seurat_object,
   subset = class == "singlet"
+)
+
+seurat_cluster_object <- subset(
+  seurat_object,
+  subset = cluster_class == "singlet"
 )
 
 ```
@@ -242,8 +249,10 @@ Total cells after doublets removal **`r dim(seurat_object)[2]`**.
 
 if(auto_save) {
   
-  saveRDS(seurat_object, file = paste0('data/', project_name, '_final_qc_object.RDS'))
-  
+  saveRDS(seurat_sample_object, file = paste0('data/', project_name, '_qc_dbl_sample_object.RDS'))
+
+  saveRDS(seurat_cluster_object, file = paste0('data/', project_name, '_qc_dbl_cluster_object.RDS'))
+
 }
 
 ```

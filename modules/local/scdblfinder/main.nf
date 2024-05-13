@@ -11,7 +11,7 @@ process SCDBLFINDER {
         path(page_config)
 
     output:
-        path("data/${params.project_name}_final_qc_object.RDS"), emit: seurat_rds
+        path("data/${params.project_name}_qc_dbl_sample_object.RDS"), emit: seurat_rds
         path("report/${notebook_scdblfinder.baseName}.html")
         path("_freeze/**/figure-html/*.png"), emit: figures
 
