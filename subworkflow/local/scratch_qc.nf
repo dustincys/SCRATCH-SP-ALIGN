@@ -107,7 +107,7 @@ workflow SCRATCH_QC {
         ch_final_object = ch_merge_object
 
         // Filtering doublets
-        if(params.skip_scdblfinder) {
+        if(!params.skip_scdblfinder) {
 
             SCDBLFINDER(
                 ch_merge_object,
