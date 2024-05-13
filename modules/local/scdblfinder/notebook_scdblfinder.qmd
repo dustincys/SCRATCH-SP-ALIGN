@@ -72,7 +72,6 @@ library(Seurat)
 library(DT)
 library(SingleCellExperiment)
 library(scDblFinder)
-library(DoubletFinder)
 
 # Expanding memory
 options(future.globals.maxSize = n_memory*1024^3)
