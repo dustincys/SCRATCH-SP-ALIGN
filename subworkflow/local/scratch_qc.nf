@@ -104,7 +104,6 @@ workflow SCRATCH_QC {
         )
 
         ch_merge_object = SEURAT_MERGE.out.seurat_rds
-        ch_final_object = ch_merge_object
 
         // Filtering doublets
         if(!params.skip_scdblfinder) {
@@ -115,9 +114,9 @@ workflow SCRATCH_QC {
                 ch_page_config
             )
 
-            ch_final_object = SCDBLFINDER.out.seurat_rds
-
         }
+
+        ch_final_object = ch_merge_object
 
     emit:
         ch_final_object
