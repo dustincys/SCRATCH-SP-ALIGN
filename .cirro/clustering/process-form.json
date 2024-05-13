@@ -34,7 +34,7 @@
             "properties": {
                     "thr_n_dimensions": {
                         "type": "integer",
-                        "default": 25,
+                        "default": 100,
                         "title": "Number of PCA dimensions"
                     }
                 }
