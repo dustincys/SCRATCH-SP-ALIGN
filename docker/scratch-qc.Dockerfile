@@ -113,9 +113,9 @@ RUN python3 -m pip install --no-cache-dir papermill
 RUN apt-get install -y libhdf5-dev
 RUN Rscript -e "install.packages('hdf5r')"
 
-RUN Rscript -e "remotes::install_version('Matrix', version = '1.6-1')"
-RUN Rscript -e "install.packages('SeuratObject')"
-RUN Rscript -e "install.packages('scCustomize')"
+#RUN Rscript -e "remotes::install_version('Matrix', version = '1.6-1')"
+#RUN Rscript -e "install.packages('SeuratObject')"
+#RUN Rscript -e "install.packages('scCustomize')"
 
 # Cleaning apt-get cache
 RUN apt-get clean
