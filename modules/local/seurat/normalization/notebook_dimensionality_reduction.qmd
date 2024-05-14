@@ -147,7 +147,7 @@ print(seurat_object[["pca"]], dims = 1:5, nfeatures = 5)
 
 ```{r pca_loading_plot, fig.height = 14}
 #| label: fig-loadings
-#| fig-cap: 'ElbowPlot'
+#| fig-cap: 'PCA Loadings'
 #| fig-cap-location: top
 #| fig-height: 14
 #| fig-width: 10
@@ -157,14 +157,14 @@ VizDimLoadings(seurat_object, dims = 1:5, reduction = "pca")
 ```
 
 :::{.callout-tip}
-The @fig-loadings Description
+The @fig-loadings visualizes dimensionality reduction loadings in a Seurat object. It displays the contribution of each gene to the principal components or other reduced dimensions, aiding in the interpretation of underlying biological variation.
 :::
 
 ### Features Plot
 
 ```{r variable_plot}
 #| label: fig-variable-plot
-#| fig-cap: 'ElbowPlot'
+#| fig-cap: 'VariableFeaturePlot (TOP 10)'
 #| fig-cap-location: top
 #| warning: false
 
@@ -181,7 +181,7 @@ variable_plot
 ```
 
 :::{.callout-tip}
-The @fig-variable-plot Description
+The @fig-variable-plot displays the variability of features across cells. It highlights genes with high variance, providing insights into the heterogeneity of gene expression within a dataset.
 :::
 
 ### Elbow Plot
@@ -197,7 +197,7 @@ elbow_plot
 ```
 
 :::{.callout-tip}
-The @fig-elbow Description
+The @fig-elbow illustrates the elbow point of the variance explained by principal components. It helps in determining the optimal number of principal components to retain for downstream analysis, such as dimensionality reduction or clustering.
 :::
 
 ## Saving Seurat object
