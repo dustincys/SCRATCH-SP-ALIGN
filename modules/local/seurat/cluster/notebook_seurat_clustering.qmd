@@ -125,7 +125,7 @@ set.seed(random_seed)
 ```{r seurat_rejoin}
 #| code-fold: true
 
-if(length(seurat_object) > 1) {
+if(length(seurat_object@assays$RNA@layers) > 1) {
   
   seurat_object <- JoinLayers(seurat_object)  
 
