@@ -37,6 +37,7 @@ process CELLRANGER_COUNT {
         """
 
     stub:
+        def args = task.ext.args ?: ''
         """
             cellranger_renaming.py "${sample}" .
 

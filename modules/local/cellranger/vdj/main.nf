@@ -36,6 +36,7 @@ process CELLRANGER_VDJ {
         """
 
     stub:
+        def args = task.ext.args ?: ''
         """
             cellranger_renaming.py "${sample}" .
 
