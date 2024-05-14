@@ -199,7 +199,8 @@ datatable(seurat_object@meta.data,
 
 ```{r}
 #| label: fig-doublet-composition
-#| fig-cap: 
+#| fig-cap: 'Barplot'
+#| fig-subcap: 
 #| - 'Cell composition across all cells'
 #| - 'Cell composition by cell clusters'
 #| column: screen-inset-shaded
