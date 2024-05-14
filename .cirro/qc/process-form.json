@@ -54,16 +54,6 @@
                 "title": "Cellbender (Beta)",
                 "type": "object",
                 "properties": {
-                    "expected_cells": {
-                        "type": "integer",
-                        "default": 200,
-                        "title": "Number of expected cells"
-                        },
-                    "total_droplets": {
-                        "type": "integer",
-                        "default": 1000,
-                        "title": "Total droplets"
-                    },
                     "fpr": {
                         "type": "number",
                         "default": 0.01,
