@@ -185,7 +185,6 @@ DT::datatable(seurat_object@meta.data,
 
 ```
 
-
 ## Saving Seurat object
 
 ```{r object_dump}

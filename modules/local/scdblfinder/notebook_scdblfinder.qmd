@@ -199,7 +199,9 @@ datatable(seurat_object@meta.data,
 
 ```{r}
 #| label: fig-doublet-composition
-#| fig-cap: 'Barplot'
+#| fig-cap: 
+#| - 'Cell composition across all cells'
+#| - 'Cell composition by cell clusters'
 #| column: screen-inset-shaded
 #| layout-nrow: 1
 
@@ -222,6 +224,9 @@ SCP::CellStatPlot(
 )
 
 ```
+:::{.callout-tip}
+The @fig-doublet-composition provides doublets/singlets distribution across all cells and clusters per patient.
+:::
 
 ## Removing doublets
 
