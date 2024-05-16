@@ -6,7 +6,7 @@ import os
 
 def samplesheet_creation(ds: PreprocessDataset) -> pd.DataFrame:
     # Clean samplesheet
-    META_COLUMNS = ["sample", "modality", "patient_id", "timepoint"]
+    META_COLUMNS = ["sample", "modality", "patient_id", "timepoint", "batch"]
 
     # Make a wide sample_table
     ds.logger.info("Pivoting samplehsheet:")
