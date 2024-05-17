@@ -21,9 +21,9 @@ lightbox:
     loop: true
 params:
   project_name: 'Test'
-  seurat_object: './data/project_reduction_object.RDS'
+  seurat_object: './data/project_reduction_object-2.RDS'
   input_features_plot: 'LYZ;CCL5;IL32;PTPRCAP;FCGR3A;PF4;PTPRC'
-  input_group_plot: 'source_name;Sort'
+  input_group_plot: 'patient_id;timepoint'
   input_integration_dimension: 'auto'
   thr_quantile: 'q01'
   thr_npc: 'auto'
@@ -279,6 +279,7 @@ seurat_cluster_composition %>%
 
 ```{r clustering_performance}
 #| code-fold: true
+#| warning: false
 
 # Sampling cells per cluster
 sample_clusters_members <- seurat_object@meta.data %>%
@@ -287,7 +288,7 @@ sample_clusters_members <- seurat_object@meta.data %>%
   slice_sample(prop = thr_proportion)
 
 sample_clusters_members <- sample_clusters_members %>%
-  rename(
+  dplyr::rename(
     Patient = patient_id,
     clusters = seurat_clusters
   )
@@ -403,7 +404,6 @@ SCP::CellDimPlot(
   show_stat = TRUE,
   theme_use = "theme_blank"
 )
-
 
 ```
 
