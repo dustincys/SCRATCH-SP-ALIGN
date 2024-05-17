@@ -7,7 +7,7 @@ import re
 def is_already_10x_format(sample_name, filename):
     """
     Determine if the filename matches the expected 10x Genomics format.
-    {sample_name}_S1_L001_R{1,2}_001.fastq.gz
+    {sample_name}__S\d+_L\d{3}_R[12]_001\.fastq\.gz
 
     Args:
         filename (str): The name of the file to check.
@@ -16,7 +16,7 @@ def is_already_10x_format(sample_name, filename):
     Returns:
         bool: True if filename matches the 10x Genomics format, False otherwise.
     """
-    pattern = re.compile(rf'^{re.escape(sample_name)}_S1_L001_R[12]_001\.fastq\.gz$')
+    pattern = re.compile(rf'^{re.escape(sample_name)}_S\d+_L\d{3}_R[12]_001\.fastq\.gz$')
     return pattern.match(filename)
 
 def rename_fastqs(sample_name, fastq_dir):
