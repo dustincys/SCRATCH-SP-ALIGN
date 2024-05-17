@@ -382,7 +382,7 @@ SCP::CellDimPlot(
 ```
 
 :::{.callout-tip}
-The @fig-umap-sample Description
+The @fig-umap-sample sample-based UMAP can be used to evaluate cluster composition. Clusters composed of a single sample can be potentially associated with malignant cells.
 :::
 
 ### Batch-based UMAP
@@ -408,7 +408,7 @@ SCP::CellDimPlot(
 ```
 
 :::{.callout-tip}
-The @fig-umap-batch Description
+The @fig-umap-batch displays the batch effect over the cell clusters.
 :::
 
 ### Group-based UMAP
@@ -435,7 +435,7 @@ SCP::CellDimPlot(
 ```
 
 :::{.callout-tip}
-The @fig-umap-multi Description
+The @fig-umap-multi shows the other study/experimental design features.
 :::
 
 ## Saving Seurat object
