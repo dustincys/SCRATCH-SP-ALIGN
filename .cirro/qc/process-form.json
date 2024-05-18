@@ -67,7 +67,7 @@
                     "skip_cellbender": {
                         "type": "boolean",
                         "default": true,
-                        "title": "Skipping Cellbender annotation",
+                        "title": "Skipping Cellbender",
                         "readOnly": true
                     }
                 }
@@ -78,7 +78,7 @@
                 "properties": {
                     "skip_scdblfinder": {
                         "type": "boolean",
-                        "title": "Skipping scDblFinder annotation"
+                        "title": "Skipping scDblFinder"
                     }    
                 }
             }
