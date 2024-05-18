@@ -111,7 +111,7 @@ set.seed(random_seed)
 seurat_temporary <- NormalizeData(object = seurat_object)
 seurat_temporary <- FindVariableFeatures(object = seurat_temporary)
 seurat_temporary <- ScaleData(object = seurat_temporary)
-seurat_temporary <- RunPCA(object = seurat_temporary) 
+seurat_temporary <- RunPCA(object = seurat_temporary)
 seurat_temporary <- RunUMAP(object = seurat_temporary, dims = 1:20)
 
 seurat_temporary <- FindNeighbors(seurat_temporary, dims = 1:10)
@@ -130,9 +130,10 @@ sce <- as.SingleCellExperiment(seurat_temporary)
 dbl_sample <- scDblFinder(
   sce, 
   samples = 'orig.ident', 
-  returnType = "table",
-  BPPARAM = BiocParallel::MulticoreParam(n_threads, RNGseed = random_seed)
+  returnType = "table"
   )
+
+# BPPARAM = BiocParallel::MulticoreParam(n_threads, RNGseed = random_seed)
 
 dbl_sample <- dbl_sample %>%
   as.data.frame()
@@ -145,8 +146,7 @@ dbl_sample <- dbl_sample %>%
 dbl_cluster <- scDblFinder(
   sce, 
   clusters = 'seurat_clusters',
-  returnType = "table",
-  BPPARAM = BiocParallel::MulticoreParam(n_threads, RNGseed = random_seed)
+  returnType = "table"
   )
 
 dbl_cluster <- dbl_cluster %>%
