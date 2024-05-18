@@ -96,6 +96,7 @@ for(sub_directory in c('data', 'figures')) {
 metadata <- readr::read_csv(file = input_exp_table)
 metadata <- metadata %>%
   select(-c(sampleIndex, fastq_1, fastq_2)) %>%
+  distinct() %>%
   as.data.frame()
 
 ```
@@ -139,7 +140,7 @@ seurat_object <- purrr::reduce(
 
 if(length(seurat_object@assays$RNA@layers) > 1) {
   
-  seurat_object <- JoinLayers(seurat_object)  
+  seurat_object <- JoinLayers(seurat_object) 
 
 }
 
@@ -147,7 +148,7 @@ if(length(seurat_object@assays$RNA@layers) > 1) {
 
 ## Adding metadata columns
 
-```{r}
+```{r adding_metadata}
 
 # Keeping cell idents
 priviosional <- seurat_object@meta.data
