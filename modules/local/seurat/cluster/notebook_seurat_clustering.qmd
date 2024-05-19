@@ -273,6 +273,8 @@ seurat_cluster_composition %>%
   distinct(seurat_clusters, total_cell) %>%
   tidyr::pivot_wider(names_from = seurat_clusters, values_from = total_cell)
 
+rogue_value <- "Skipped"
+
 ```
 
 ## Clustering performance {.tabset}
@@ -322,7 +324,7 @@ rogue_result
 ```
 
 ::: {.callout-warning}
-The ROGUE score for the clustering composition (resolution = **`r thr_resolution`**) is equal to **`r false`**.
+The ROGUE score for the clustering composition (resolution = **`r thr_resolution`**) is equal to **`r rogue_value`**.
 :::
 
 ### SEplot
