@@ -280,6 +280,7 @@ seurat_cluster_composition %>%
 ```{r clustering_performance}
 #| code-fold: true
 #| warning: false
+#| eval: false
 
 # Sampling cells per cluster
 sample_clusters_members <- seurat_object@meta.data %>%
@@ -321,7 +322,7 @@ rogue_result
 ```
 
 ::: {.callout-warning}
-The ROGUE score for the clustering composition (resolution = **`r thr_resolution`**) is equal to **`r rogue_value`**.
+The ROGUE score for the clustering composition (resolution = **`r thr_resolution`**) is equal to **`r false`**.
 :::
 
 ### SEplot
@@ -330,6 +331,7 @@ The ROGUE score for the clustering composition (resolution = **`r thr_resolution
 #| label: fig-se-plot
 #| fig-cap: 'UMAP'
 #| fig-cap-location: top
+#| eval: false
 
 # Highly variable genes
 SEplot(entropy_result)
@@ -346,6 +348,7 @@ The @fig-se-plot shows the relationship between S and E. S-E curve identifies hi
 #| label: fig-rogue-plot
 #| fig-cap: 'UMAP'
 #| fig-cap-location: top
+#| eval: false
 
 rogue.boxplot(rogue_result) +
   scale_x_discrete(limits = sort(unique(seurat_object@meta.data$seurat_clusters))) +
