@@ -7,6 +7,9 @@ testing*
 *.ipynb
 .DS_Store
 
+# Docs
+site/
+
 # Dev
 Project/
 data/
