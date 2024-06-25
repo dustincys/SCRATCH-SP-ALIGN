@@ -38,6 +38,9 @@ workflow SCRATCH_ALIGN {
             .splitCsv(header:true, sep:',')
             .map{ row -> tuple row.sample, row.fastq_1, row.fastq_2, row.modality }
 
+        ch_sample_table
+            .view()
+
         // Separeting GEX and VDJ
         ch_sample_branches = ch_sample_table
             .branch {

@@ -6,6 +6,7 @@ testing*
 *.pyc
 *.ipynb
 .DS_Store
+pipeline_info/
 
 # Docs
 site/

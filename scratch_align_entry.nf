@@ -10,8 +10,8 @@ include { SCRATCH_ALIGN } from './subworkflow/local/scratch_align.nf'
 */
 
 if (params.samplesheet) { samplesheet = file(params.samplesheet) } else { exit 1, 'Please, provide a --samplesheet <path/to/samplesheet> !' }
-if (params.modality) { modality = file(params.modality) } else { exit 1, 'Please, provide a --modality <GEX|TCR|GEX+TCR> !' }
-if (params.genome) { genome = file(params.genome) } else { exit 1, 'Please, provide a --genome <GRCh38|GRCm39> !' }
+if (params.modality) { modality = params.modality } else { exit 1, 'Please, provide a --modality <GEX|TCR|GEX+TCR> !' }
+if (params.genome) { genome = params.genome } else { exit 1, 'Please, provide a --genome <GRCh38|GRCm39> !' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
