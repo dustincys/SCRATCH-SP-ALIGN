@@ -3,8 +3,8 @@
 //
 
 include { SAMPLESHEET_CHECK        } from '../../modules/local/helper/validate/main.nf'
-include { CELLRANGER_COUNT         } from '../../modules/local/cellranger/count/main.nf'
-include { CELLRANGER_VDJ           } from '../../modules/local/cellranger/vdj/main.nf'
+include { SPACERANGER_COUNT         } from '../../modules/local/spaceranger/count/main.nf'
+include { SPACERANGER_MKFASTQ           } from '../../modules/local/spaceranger/mkfastq/main.nf'
 
 // Importing Quarto notebooks
 
@@ -41,7 +41,7 @@ workflow SCRATCH_ALIGN {
         ch_sample_table
             .view()
 
-        // Separeting GEX and VDJ
+        // Separeting GEX and MKFASTQ
         ch_sample_branches = ch_sample_table
             .branch {
                 gex: it[3] == 'GEX'
@@ -51,12 +51,12 @@ workflow SCRATCH_ALIGN {
         // Printing out warnings
         ch_sample_branches.gex
             .ifEmpty { 
-                println("No GEX samples were found. Skipping CELLRANGER_COUNTS process.")
+                println("No GEX samples were found. Skipping SPACERANGER_COUNTS process.")
             }
 
         ch_sample_branches.tcr
             .ifEmpty { 
-                println("No TCR samples were found. Skipping CELLRANGER_VDJ process.")
+                println("No TCR samples were found. Skipping SPACERANGER_MKFASTQ process.")
             }
 
         if(modality =~ /\b(GEX)/) {
@@ -71,7 +71,7 @@ workflow SCRATCH_ALIGN {
                 .map { row -> tuple row[0], row[1 .. 2].flatten() }
 
             // Cellranger gex alignment
-            ch_gex_alignment = CELLRANGER_COUNT(
+            ch_gex_alignment = SPACERANGER_COUNT(
                 ch_gex_grouped,
                 gex_indexes
             ) 
@@ -82,8 +82,8 @@ workflow SCRATCH_ALIGN {
 
         if(modality =~ /\b(TCR)/) {
 
-            // Staging Cellranger VDJ reference
-            vdj_indexes = params.genomes[genome].vdj
+            // Staging Cellranger MKFASTQ reference
+            mkfastq_indexes = params.genomes[genome].mkfastq
 
             // Grouping fastq based on sample id
             ch_tcr_grouped = ch_sample_branches.tcr
@@ -92,9 +92,9 @@ workflow SCRATCH_ALIGN {
                 .map { row -> tuple row[0], row[1 .. 2].flatten() }
 
             // Cellranger gex alignment
-            ch_tcr_alignment = CELLRANGER_VDJ(
+            ch_tcr_alignment = SPACERANGER_MKFASTQ(
                 ch_tcr_grouped,
-                vdj_indexes
+                mkfastq_indexes
             )
 
             ch_cellrange_outs = ch_tcr_alignment.outs
